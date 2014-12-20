@@ -6,3 +6,4 @@ D:\IDPA\idpaTrojaner\Client\idpaClient\obj\Debug\idpaClient.pdb
 D:\IDPA\idpaTrojaner\Client\idpaClient\obj\Debug\idpaClient.Keylogger.resources
 D:\IDPA\idpaTrojaner\Client\idpaClient\obj\Debug\idpaClient.csproj.GenerateResource.Cache
 D:\IDPA\idpaTrojaner\Client\idpaClient\obj\Debug\idpaClient.Properties.Resources.resources
+D:\IDPA\idpaTrojaner\Client\idpaClient\obj\Debug\idpaClient.csprojResolveAssemblyReference.cache

