@@ -25,3 +25,14 @@ C:\Data\idpaTrojaner\Server\idpaClient\obj\Debug\idpaServer.csprojResolveAssembl
 C:\Data\idpaTrojaner\Server\idpaClient\obj\Debug\idpaServer.Keylogger.resources
 C:\Data\idpaTrojaner\Server\idpaClient\obj\Debug\idpaServer.Properties.Resources.resources
 C:\Data\idpaTrojaner\Server\idpaClient\obj\Debug\idpaServer.csproj.GenerateResource.Cache
+D:\IDPA\idpaTrojaner\Server\idpaClient\bin\Debug\idpaServer.exe.config
+D:\IDPA\idpaTrojaner\Server\idpaClient\obj\Debug\idpaServer.exe
+D:\IDPA\idpaTrojaner\Server\idpaClient\obj\Debug\idpaServer.pdb
+D:\IDPA\idpaTrojaner\Server\idpaClient\obj\Debug\idpaServer.csprojResolveAssemblyReference.cache
+D:\IDPA\idpaTrojaner\Server\idpaClient\obj\Debug\idpaServer.Properties.Resources.resources
+D:\IDPA\idpaTrojaner\Server\idpaClient\obj\Debug\idpaServer.csproj.GenerateResource.Cache
+D:\IDPA\idpaTrojaner\Server\idpaClient\bin\Debug\idpaServer.exe
+D:\IDPA\idpaTrojaner\Server\idpaClient\bin\Debug\idpaServer.pdb
+D:\IDPA\idpaTrojaner\Server\idpaClient\bin\Debug\ServiceTools.dll
+D:\IDPA\idpaTrojaner\Server\idpaClient\bin\Debug\IdpaTools.dll
+D:\IDPA\idpaTrojaner\Server\idpaClient\bin\Debug\IdpaTools.pdb

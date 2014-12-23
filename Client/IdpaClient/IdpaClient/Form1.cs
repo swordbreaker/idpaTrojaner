@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IdpaTools;
 
 namespace IdpaClient
 {
     public partial class Form1 : Form
     {
-        private const string LOG_PATH = @"C:\logfile.txt";
+        private const string LOG_PATH = @"C:\Temp\log.xml";
         private Logger logger;
 
         public Form1()
@@ -27,10 +28,9 @@ namespace IdpaClient
             string tempOutput;
             textBox1.Text = "";
 
-
             foreach(ApplicationLog app in logger.applicationLog)
             {
-                tempOutput = app.applicationName + " (" + app.date + ") \r\n";
+                tempOutput = app.processName + " (" + app.date + ") \r\n";
                 textBox1.AppendText(tempOutput);
 
                 foreach(string key in app.keyList)

@@ -4,16 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System.Diagnostics;
 
-namespace idpaServer
+namespace IdpaTools
 {
     /**
      * Serilizer
      * Tool for Serialize the KeyLogger to a xml file
      * Tobias Bolliner & Thierry Girod
      */
-    static class Serilizer
+    public static class Serilizer
     {
         public static void writeDataToFile(string path, Logger logger)
         {

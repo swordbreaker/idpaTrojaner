@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace idpaServer
+namespace IdpaService
 {
     /**
      * Logger
@@ -24,8 +24,7 @@ namespace idpaServer
      */
     public class ApplicationLog
     {
-        public string processName;
-        public string windowName;
+        public string applicationName;
         public DateTime date;
         public List<string> keyList = new List<string>();
     }
