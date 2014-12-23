@@ -1,9 +1,0 @@
-D:\IDPA\idpaTrojaner\Client\idpaClient\bin\Debug\idpaServer.exe.config
-D:\IDPA\idpaTrojaner\Client\idpaClient\obj\Debug\idpaServer.csprojResolveAssemblyReference.cache
-D:\IDPA\idpaTrojaner\Client\idpaClient\obj\Debug\idpaServer.Keylogger.resources
-D:\IDPA\idpaTrojaner\Client\idpaClient\obj\Debug\idpaServer.Properties.Resources.resources
-D:\IDPA\idpaTrojaner\Client\idpaClient\obj\Debug\idpaServer.csproj.GenerateResource.Cache
-D:\IDPA\idpaTrojaner\Client\idpaClient\bin\Debug\idpaServer.exe
-D:\IDPA\idpaTrojaner\Client\idpaClient\bin\Debug\idpaServer.pdb
-D:\IDPA\idpaTrojaner\Client\idpaClient\obj\Debug\idpaServer.exe
-D:\IDPA\idpaTrojaner\Client\idpaClient\obj\Debug\idpaServer.pdb

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "idpaServer", "idpaServer.csproj", "{F077087F-D3CD-4E5C-BF59-014B38B24297}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "idpaServer", "Server\idpaClient\idpaServer.csproj", "{F077087F-D3CD-4E5C-BF59-014B38B24297}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdpaClient", "..\..\Client\IdpaClient\IdpaClient\IdpaClient.csproj", "{00DC5F9F-589C-46A9-B3CF-8D5B2C1FC4E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdpaClient", "Client\IdpaClient\IdpaClient\IdpaClient.csproj", "{00DC5F9F-589C-46A9-B3CF-8D5B2C1FC4E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

