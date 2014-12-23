@@ -7,11 +7,21 @@ using System.IO;
 
 namespace idpaServer
 {
+    /**
+     * Logger
+     * Class to Store the Data form the Keylogfile
+     * Tobias Bolliner & Thierry Girod
+     */
     public class Logger
     {
         public List<ApplicationLog> applicationLog = new List<ApplicationLog>();
     }
 
+    /**
+     * ApplcationLog
+     * Application List for every Application captior insert Keys
+     * Tobias Bolliner & Thierry Girod
+     */
     public class ApplicationLog
     {
         public string applicationName;

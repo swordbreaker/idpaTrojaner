@@ -9,7 +9,11 @@ using Microsoft.Win32;
 
 namespace idpaServer
 {
-
+    /**
+     * Program
+     * Startup Class initialize the Controller Class
+     * Tobias Bolliner & Thierry Girod
+     */
     class Program
     {
         static void Main(string[] args)
