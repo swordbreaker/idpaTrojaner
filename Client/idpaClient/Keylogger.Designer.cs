@@ -1,4 +1,4 @@
-﻿namespace idpaClient
+﻿namespace idpaServer
 {
     partial class Keylogger
     {

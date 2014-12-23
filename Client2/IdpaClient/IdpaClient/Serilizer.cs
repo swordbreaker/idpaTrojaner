@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
 
-namespace idpaServer
+namespace IdpaClient
 {
     static class Serilizer
     {

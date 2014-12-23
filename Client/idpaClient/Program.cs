@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using Microsoft.Win32;
 
-namespace idpaClient
+namespace idpaServer
 {
 
     class Program
