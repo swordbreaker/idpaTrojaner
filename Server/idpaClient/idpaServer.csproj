@@ -52,7 +52,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>idpaServer.Program</StartupObject>
+    <StartupObject>idpaServer.ConnectionManager</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>58353C7D7A6768BC391D005213AA9A95332AEC81</ManifestCertificateThumbprint>
@@ -88,7 +88,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionManager.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="FileManager.cs" />
     <Compile Include="FileScanner.cs" />
     <Compile Include="Keylogger.cs" />
     <Compile Include="Logger.cs" />
