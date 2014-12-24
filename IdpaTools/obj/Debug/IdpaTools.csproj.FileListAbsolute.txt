@@ -1,0 +1,9 @@
+D:\IDPA\idpaTrojaner\IdpaTools\bin\Debug\IdpaTools.dll
+D:\IDPA\idpaTrojaner\IdpaTools\bin\Debug\IdpaTools.pdb
+D:\IDPA\idpaTrojaner\IdpaTools\obj\Debug\IdpaTools.dll
+D:\IDPA\idpaTrojaner\IdpaTools\obj\Debug\IdpaTools.pdb
+D:\IDPA\temp\IdpaTools\bin\Debug\IdpaTools.dll
+D:\IDPA\temp\IdpaTools\bin\Debug\IdpaTools.pdb
+D:\IDPA\temp\IdpaTools\obj\Debug\IdpaTools.csprojResolveAssemblyReference.cache
+D:\IDPA\temp\IdpaTools\obj\Debug\IdpaTools.dll
+D:\IDPA\temp\IdpaTools\obj\Debug\IdpaTools.pdb
