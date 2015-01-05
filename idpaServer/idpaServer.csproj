@@ -52,7 +52,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>idpaServer.Program</StartupObject>
+    <StartupObject>idpaServer.ConnectionManager</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>58353C7D7A6768BC391D005213AA9A95332AEC81</ManifestCertificateThumbprint>
@@ -108,7 +108,6 @@
     <None Include="App.config" />
     <None Include="app.manifest" />
     <None Include="ClassDiagram1.cd" />
-    <None Include="idpaClient_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
