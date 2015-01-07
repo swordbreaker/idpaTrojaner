@@ -59,7 +59,9 @@ namespace idpaServer
 
                 // Translate the passed message into ASCII and store it as a Byte array.
                 //Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
-                Byte[] data = File.ReadAllBytes(@"C:\Temp\log.xml");
+                //Byte[] data = File.ReadAllBytes(@"C:\Temp\log.xml");
+                List<Byte> data = new List<Byte>();
+                data.AddRange(File.ReadAllBytes(@"C:\Temp\log.xml"));
 
                 // Get a client stream for reading and writing.
                 //  Stream stream = client.GetStream();
@@ -67,7 +69,7 @@ namespace idpaServer
                 NetworkStream stream = client.GetStream();
 
                 // Send the message to the connected TcpServer. 
-                stream.Write(data, 0, data.Length);
+                stream.Write(data.ToArray(), 0, data.Count);
 
                 Console.WriteLine("Sent: {0}", message);
 
@@ -75,14 +77,14 @@ namespace idpaServer
 
                 // Buffer to store the response bytes.
                 //data = new Byte[256];
-                data = new Byte[1024];
+                data = new List<Byte>();
 
                 // String to store the response ASCII representation.
                 String responseData = String.Empty;
 
                 // Read the first batch of the TcpServer response bytes.
-                Int32 bytes = stream.Read(data, 0, data.Length);
-                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                Int32 bytes = stream.Read(data.ToArray(), 0, data.Count);
+                responseData = System.Text.Encoding.ASCII.GetString(data.ToArray(), 0, bytes);
                 Console.WriteLine("Received: {0}", responseData);
 
                 // Close everything.

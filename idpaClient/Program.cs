@@ -36,7 +36,8 @@ namespace IdpaClient
                 server.Start();
 
                 // Buffer for reading data
-                Byte[] bytes = new Byte[256];
+                //Byte[] bytes = new Byte[256];
+                List<Byte> bytes = new List<byte>();
                 String data = null;
 
                 // Enter the listening loop.
@@ -57,25 +58,27 @@ namespace IdpaClient
                     int i;
 
                     // Loop to receive all the data sent by the client.
-                    while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                    while ((i = stream.Read(bytes.ToArray(), 0, bytes.Count)) != 0)
                     {
                         // Translate data bytes to a ASCII string.
-                        data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                        data = System.Text.Encoding.ASCII.GetString(bytes.ToArray(), 0, i);
                         Console.WriteLine("Received: {0}", data);
 
                         // Process the data sent by the client.
                         data = data.ToUpper();
 
-                        Byte[] fileData = System.Text.Encoding.ASCII.GetBytes(data);
+                        Byte[] fileData = System.Text.Encoding.ASCII.GetBytes(data.ToArray());
 
-                        File.WriteAllBytes(@"D:\Temp\log_send.xml", fileData);
+                        File.WriteAllBytes(@"C:\Temp\log_send.xml", fileData);
 
-                        byte[] msg = System.Text.Encoding.ASCII.GetBytes("File succesfull send");
-
-                        // Send back a response.
-                        stream.Write(msg, 0, msg.Length);
                         Console.WriteLine("Sent: {0}", data);
                     }
+
+                    byte[] msg = System.Text.Encoding.ASCII.GetBytes("File succesfull send");
+
+                    // Send back a response.
+                    stream.Write(msg, 0, msg.Length);
+                    
 
                     // Shutdown and end connection
                     client.Close();
