@@ -25,8 +25,11 @@ namespace IdpaClient
 
             startAsyncTCPListener();
 
-            Console.WriteLine("\nHit enter to continue...");
-            Console.Read();
+            while(true)
+            {
+
+            }
+
         }
 
         public async static void startAsyncTCPListener()
@@ -64,7 +67,6 @@ namespace IdpaClient
                     // Get a stream object for reading and writing
                     NetworkStream stream = client.GetStream();
 
-
                     // Loop to receive all the data sent by the client.
 
                     Int32 count = 50000;
@@ -85,24 +87,6 @@ namespace IdpaClient
 
                     // Shutdown and end connection
                     client.Close();
-
-                    //while ((i = stream.Read(bytes.ToArray(), 0, 256)) != 0)
-                    //{
-                    //    // Translate data bytes to a ASCII string.
-                    //    data = System.Text.Encoding.ASCII.GetString(bytes.ToArray(), 0, i);
-                    //    Console.WriteLine("Received: {0}", data);
-
-                    //    // Process the data sent by the client.
-                    //    data = data.ToUpper();
-
-                    //    Byte[] fileData = System.Text.Encoding.ASCII.GetBytes(data.ToArray());
-
-                    //    File.Create(@"C:\Temp\log_send.xml");
-                    //    File.WriteAllBytes(@"C:\Temp\log_send.xml", fileData);
-
-                    //    Console.WriteLine("Sent: {0}", data);
-                    //    Console.WriteLine("Penis");
-                    //}
                 }
             }
             catch (SocketException e)

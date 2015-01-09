@@ -13,11 +13,14 @@ namespace idpaServer
     {
         public static void Main(string[] args)
         {
-            Console.Write("Message: ");
+            //saveClientDataToServer("http://www.swordbreacker.ch/idpa/index.php", "testName", "Windows Blabla");
+
+            Console.WriteLine(HasClientIpChangend("http://www.swordbreacker.ch/idpa/getip.php", 37));
+            
+
             string msg = Console.ReadLine();
 
             Connect("127.0.0.1", msg);
-
         }
 
         static void Connect(String server, String message)
@@ -76,6 +79,37 @@ namespace idpaServer
 
             Console.WriteLine("\n Press Enter to continue...");
             Console.Read();
+        }
+
+        public static bool HasClientIpChangend(string uri, int id)
+        {    
+            string parameters = @"id=" + id.ToString();
+
+            string result;
+
+            using (WebClient wc = new WebClient())
+            {
+                wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                string HtmlResult = wc.UploadString(uri, parameters);
+                result = HtmlResult;
+            }
+
+            return bool.Parse(result);
+        }
+
+        public static string saveClientDataToServer(string uri, string name, string winVers)
+        {
+            //string uri = "http://www.swordbreacker.ch/idpa/index.php";
+            string parameters = @"name=" + name + "&winVers=" + winVers;
+            string myId;
+
+            using (WebClient wc = new WebClient())
+            {
+                wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                string HtmlResult = wc.UploadString(uri, parameters);
+                myId = HtmlResult;
+            }
+            return myId;
         }
     }
 }
