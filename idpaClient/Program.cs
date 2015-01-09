@@ -19,14 +19,14 @@ namespace IdpaClient
         [STAThread]
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
 
-            startAsyncTCPListener();
+            //startAsyncTCPListener();
 
-            Console.WriteLine("\nHit enter to continue...");
-            Console.Read();
+            //Console.WriteLine("\nHit enter to continue...");
+            //Console.Read();
         }
 
         public async static void startAsyncTCPListener()
