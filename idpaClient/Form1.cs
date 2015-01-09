@@ -27,31 +27,47 @@ namespace IdpaClient
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            adressInfo.Start();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        
+        private void GetKeyLoggerData()
         {
+            //logger = Serilizer.getDataFromFile(LOG_PATH, logger);
+            //string tempOutput;
+            //textBox1.Text = "";
+
+            //foreach (ApplicationLog app in logger.applicationLog)
+            //{
+            //    tempOutput = app.processName + " (" + app.date + ") \r\n";
+            //    textBox1.AppendText(tempOutput);
+
+            //    foreach (string key in app.keyList)
+            //    {
+            //        textBox1.AppendText(key + " ");
+            //    }
+            //    textBox1.AppendText("\r\n");
+            }
+
+        private void getData_Click(object sender, EventArgs e)
+        {
+            eventLog.Text += "Starting download... \r\n";
+
             
         }
 
-        private void GetKeyLoggerData()
+        private void adressInfo_Tick(object sender, EventArgs e)
         {
-            logger = Serilizer.getDataFromFile(LOG_PATH, logger);
-            string tempOutput;
-            textBox1.Text = "";
-
-            foreach (ApplicationLog app in logger.applicationLog)
-            {
-                tempOutput = app.processName + " (" + app.date + ") \r\n";
-                textBox1.AppendText(tempOutput);
-
-                foreach (string key in app.keyList)
-                {
-                    textBox1.AppendText(key + " ");
-                }
-                textBox1.AppendText("\r\n");
-            }
+            adressInfo.Stop();
+            
         }
+
+        private void search_Click(object sender, EventArgs e)
+        {
+            eventLog.Text += "Starting search of '" + searchBox.Text + "'... \r\n";
+            eventLog.Text += "Search finished \r\n";
+        }
+
+       }
     }
-}
+
