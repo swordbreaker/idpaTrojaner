@@ -61,12 +61,15 @@ namespace idpaServer
                 //Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
                 //Byte[] data = File.ReadAllBytes(@"C:\Temp\log.xml");
                 List<Byte> data = new List<Byte>();
-                data.AddRange(File.ReadAllBytes(@"C:\Temp\log.xml"));
+                //data.AddRange(File.ReadAllBytes(@"C:\Temp\log.xml"));
+                data.AddRange(System.Text.Encoding.ASCII.GetBytes(message));
 
                 // Get a client stream for reading and writing.
                 //  Stream stream = client.GetStream();
 
                 NetworkStream stream = client.GetStream();
+
+                Console.WriteLine();
 
                 // Send the message to the connected TcpServer. 
                 stream.Write(data.ToArray(), 0, data.Count);

