@@ -22,8 +22,6 @@ namespace idpaServer
             graphics = Graphics.FromImage(bitmap as Image);
             graphics.CopyFromScreen(0, 0, 0, 0, bitmap.Size);
 
-            Console.WriteLine("PrintScreen taken");
-
             return bitmap;
         }
     }

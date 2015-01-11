@@ -15,13 +15,27 @@ namespace idpaServer
             try
             {
                 bitmap.Save(printScreenSavePath, ImageFormat.Jpeg);
-                Console.WriteLine("Print Screen Saved at {0}", printScreenSavePath);
+                return true;
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine("{0} Exception caught.", e);
                 return false;
             }
-           return true;
+        }
+
+        public static bool SaveLogFile(string path, IdpaTools.Logger logger)
+        {
+            try
+            {
+                IdpaTools.Serilizer.writeDataToFile(path, logger);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("{0} Exception caught.", e);
+                return false;
+            }
         }
     }
 }
