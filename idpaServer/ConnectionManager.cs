@@ -11,6 +11,9 @@ namespace idpaServer
 {
     class ConnectionManager
     {
+        private IPAddress localIpAdress;
+        private IPAddress ClientIpAdress;
+
         public static void Main(string[] args)
         {
             //saveClientDataToServer("http://www.swordbreacker.ch/idpa/index.php", "testName", "Windows Blabla");
@@ -20,6 +23,22 @@ namespace idpaServer
             string msg = Console.ReadLine();
 
             SendFileToClient("127.0.0.1", @"C:\Temp\log.xml");
+        }
+
+        public static string GetLocalIp()
+        {
+            IPHostEntry host;
+            string localIP = "";
+            host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                localIP = ip.ToString();
+                break;
+                }
+            }
+            return localIP;
         }
 
         public static async void SendFileToClient(String server, String filePath)
