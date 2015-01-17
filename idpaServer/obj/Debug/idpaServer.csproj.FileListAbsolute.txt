@@ -46,7 +46,6 @@ D:\IDPA\idpaTrojaner\idpaServer\obj\Debug\idpaServer.exe
 D:\IDPA\idpaTrojaner\idpaServer\obj\Debug\idpaServer.pdb
 D:\IDPA\idpaTrojaner\idpaServer\bin\Debug\idpaServer.exe
 D:\IDPA\idpaTrojaner\idpaServer\bin\Debug\idpaServer.pdb
-D:\IDPA\idpaTrojaner\idpaServer\bin\Debug\IdpaTools.pdb
 D:\IDPA\idpaTrojaner\idpaServer\obj\Debug\idpaServer.csprojResolveAssemblyReference.cache
 D:\IDPA\idpaTrojaner\idpaServer\obj\Debug\idpaServer.Properties.Resources.resources
 D:\IDPA\idpaTrojaner\idpaServer\obj\Debug\idpaServer.csproj.GenerateResource.Cache
@@ -59,3 +58,5 @@ C:\Data\idpaTrojaner\idpaServer\bin\Debug\IdpaTools.pdb
 C:\Data\idpaTrojaner\idpaServer\obj\Debug\idpaServer.csprojResolveAssemblyReference.cache
 C:\Data\idpaTrojaner\idpaServer\obj\Debug\idpaServer.Properties.Resources.resources
 C:\Data\idpaTrojaner\idpaServer\obj\Debug\idpaServer.csproj.GenerateResource.Cache
+D:\IDPA\idpaTrojaner\idpaServer\bin\Debug\idpaServer.exe.CodeAnalysisLog.xml
+D:\IDPA\idpaTrojaner\idpaServer\bin\Debug\idpaServer.exe.lastcodeanalysissucceeded

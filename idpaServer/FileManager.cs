@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,12 @@ namespace idpaServer
 {
     static class FileManager
     {
-        public static bool SavePrintScreen(Bitmap bitmap, string printScreenSavePath)
+        public static bool SavePrintScreen(Bitmap bitmap, string printScreenFolder, string printScreenName)
         {
             try
             {
+                string printScreenSavePath = printScreenFolder + printScreenName + Controller.PrintScreenCount + ".jpg";
+                Controller.PrintScreenCount++;
                 bitmap.Save(printScreenSavePath, ImageFormat.Jpeg);
                 return true;
             }
@@ -36,6 +39,12 @@ namespace idpaServer
                 Console.WriteLine("{0} Exception caught.", e);
                 return false;
             }
+        }
+
+        public static bool ZipUserData(string userDataPath, string savePath)
+        {
+            ZipFile.CreateFromDirectory(userDataPath, savePath);
+            return true;
         }
     }
 }

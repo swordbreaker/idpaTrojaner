@@ -5,7 +5,6 @@ D:\IDPA\idpaTrojaner\idpaClient\obj\Debug\IdpaClient.pdb
 D:\IDPA\idpaTrojaner\idpaClient\bin\Debug\IdpaClient.exe.config
 D:\IDPA\idpaTrojaner\idpaClient\bin\Debug\IdpaClient.exe
 D:\IDPA\idpaTrojaner\idpaClient\bin\Debug\IdpaClient.pdb
-D:\IDPA\idpaTrojaner\idpaClient\bin\Debug\IdpaTools.pdb
 D:\IDPA\idpaTrojaner\idpaClient\obj\Debug\IdpaClient.exe
 D:\IDPA\idpaTrojaner\idpaClient\obj\Debug\IdpaClient.csprojResolveAssemblyReference.cache
 C:\Data\idpaTrojaner\idpaClient\bin\Debug\IdpaClient.exe.config
@@ -18,3 +17,5 @@ C:\Data\idpaTrojaner\idpaClient\obj\Debug\IdpaClient.csprojResolveAssemblyRefere
 C:\Data\idpaTrojaner\idpaClient\obj\Debug\IdpaClient.Form1.resources
 C:\Data\idpaTrojaner\idpaClient\obj\Debug\IdpaClient.Properties.Resources.resources
 C:\Data\idpaTrojaner\idpaClient\obj\Debug\IdpaClient.csproj.GenerateResource.Cache
+D:\IDPA\idpaTrojaner\idpaClient\bin\Debug\IdpaTools.dll
+D:\IDPA\idpaTrojaner\idpaClient\bin\Debug\IdpaTools.pdb

