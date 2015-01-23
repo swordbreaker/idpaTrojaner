@@ -53,34 +53,34 @@
             this.keyLoggerDataViewAppName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.keyLoggerDataViewWindowName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.keyLoggerDataViewText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.searchText = new System.Windows.Forms.CheckBox();
-            this.searchWindowsName = new System.Windows.Forms.CheckBox();
-            this.searchAppName = new System.Windows.Forms.CheckBox();
-            this.searchDate = new System.Windows.Forms.CheckBox();
             this.search = new System.Windows.Forms.Button();
             this.searchBox = new System.Windows.Forms.TextBox();
             this.screenshot = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.eventLog = new System.Windows.Forms.TextBox();
-            this.adressInfo = new System.Windows.Forms.Timer(this.components);
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.eventLog = new System.Windows.Forms.TextBox();
+            this.adressInfo = new System.Windows.Forms.Timer(this.components);
+            this.radioDate = new System.Windows.Forms.RadioButton();
+            this.radioAName = new System.Windows.Forms.RadioButton();
+            this.radioWName = new System.Windows.Forms.RadioButton();
+            this.radioText = new System.Windows.Forms.RadioButton();
             this.tabBar_Trojaner.SuspendLayout();
             this.overview.SuspendLayout();
             this.dataview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.keyLoggerDataView)).BeginInit();
             this.screenshot.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             this.SuspendLayout();
             // 
             // tabBar_Trojaner
@@ -268,11 +268,11 @@
             // 
             // dataview
             // 
+            this.dataview.Controls.Add(this.radioText);
+            this.dataview.Controls.Add(this.radioWName);
+            this.dataview.Controls.Add(this.radioAName);
+            this.dataview.Controls.Add(this.radioDate);
             this.dataview.Controls.Add(this.keyLoggerDataView);
-            this.dataview.Controls.Add(this.searchText);
-            this.dataview.Controls.Add(this.searchWindowsName);
-            this.dataview.Controls.Add(this.searchAppName);
-            this.dataview.Controls.Add(this.searchDate);
             this.dataview.Controls.Add(this.search);
             this.dataview.Controls.Add(this.searchBox);
             this.dataview.Location = new System.Drawing.Point(4, 22);
@@ -298,6 +298,7 @@
             this.keyLoggerDataViewText});
             this.keyLoggerDataView.Location = new System.Drawing.Point(6, 32);
             this.keyLoggerDataView.Name = "keyLoggerDataView";
+            this.keyLoggerDataView.ReadOnly = true;
             this.keyLoggerDataView.Size = new System.Drawing.Size(855, 288);
             this.keyLoggerDataView.TabIndex = 6;
             // 
@@ -324,54 +325,6 @@
             this.keyLoggerDataViewText.Name = "keyLoggerDataViewText";
             this.keyLoggerDataViewText.Width = 300;
             // 
-            // searchText
-            // 
-            this.searchText.AutoSize = true;
-            this.searchText.Checked = true;
-            this.searchText.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.searchText.Location = new System.Drawing.Point(598, 10);
-            this.searchText.Name = "searchText";
-            this.searchText.Size = new System.Drawing.Size(47, 17);
-            this.searchText.TabIndex = 5;
-            this.searchText.Text = "Text";
-            this.searchText.UseVisualStyleBackColor = true;
-            // 
-            // searchWindowsName
-            // 
-            this.searchWindowsName.AutoSize = true;
-            this.searchWindowsName.Checked = true;
-            this.searchWindowsName.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.searchWindowsName.Location = new System.Drawing.Point(496, 10);
-            this.searchWindowsName.Name = "searchWindowsName";
-            this.searchWindowsName.Size = new System.Drawing.Size(96, 17);
-            this.searchWindowsName.TabIndex = 4;
-            this.searchWindowsName.Text = "Window Name";
-            this.searchWindowsName.UseVisualStyleBackColor = true;
-            // 
-            // searchAppName
-            // 
-            this.searchAppName.AutoSize = true;
-            this.searchAppName.Checked = true;
-            this.searchAppName.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.searchAppName.Location = new System.Drawing.Point(381, 10);
-            this.searchAppName.Name = "searchAppName";
-            this.searchAppName.Size = new System.Drawing.Size(109, 17);
-            this.searchAppName.TabIndex = 3;
-            this.searchAppName.Text = "Application Name";
-            this.searchAppName.UseVisualStyleBackColor = true;
-            // 
-            // searchDate
-            // 
-            this.searchDate.AutoSize = true;
-            this.searchDate.Checked = true;
-            this.searchDate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.searchDate.Location = new System.Drawing.Point(318, 10);
-            this.searchDate.Name = "searchDate";
-            this.searchDate.Size = new System.Drawing.Size(57, 17);
-            this.searchDate.TabIndex = 2;
-            this.searchDate.Text = "Datum";
-            this.searchDate.UseVisualStyleBackColor = true;
-            // 
             // search
             // 
             this.search.Location = new System.Drawing.Point(225, 6);
@@ -384,11 +337,14 @@
             // 
             // searchBox
             // 
+            this.searchBox.AcceptsReturn = true;
+            this.searchBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.searchBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.searchBox.Location = new System.Drawing.Point(6, 6);
             this.searchBox.Name = "searchBox";
             this.searchBox.Size = new System.Drawing.Size(213, 20);
             this.searchBox.TabIndex = 0;
-            this.searchBox.TextChanged += new System.EventHandler(this.searchBox_TextChanged);
+            this.searchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchBox_OnKeyDown);
             // 
             // screenshot
             // 
@@ -424,6 +380,26 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(853, 317);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
+            this.pictureBox6.Location = new System.Drawing.Point(571, 161);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(278, 153);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox6.TabIndex = 5;
+            this.pictureBox6.TabStop = false;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(287, 161);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(278, 153);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox5.TabIndex = 4;
+            this.pictureBox5.TabStop = false;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -443,24 +419,6 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
-            // 
-            // eventLog
-            // 
-            this.eventLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.eventLog.BackColor = System.Drawing.Color.Black;
-            this.eventLog.ForeColor = System.Drawing.Color.Lime;
-            this.eventLog.Location = new System.Drawing.Point(12, 369);
-            this.eventLog.Multiline = true;
-            this.eventLog.Name = "eventLog";
-            this.eventLog.ReadOnly = true;
-            this.eventLog.Size = new System.Drawing.Size(873, 106);
-            this.eventLog.TabIndex = 14;
-            // 
-            // adressInfo
-            // 
-            this.adressInfo.Interval = 5000;
-            this.adressInfo.Tick += new System.EventHandler(this.adressInfo_Tick);
             // 
             // pictureBox3
             // 
@@ -482,25 +440,70 @@
             this.pictureBox4.TabIndex = 3;
             this.pictureBox4.TabStop = false;
             // 
-            // pictureBox5
+            // eventLog
             // 
-            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(287, 161);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(278, 153);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox5.TabIndex = 4;
-            this.pictureBox5.TabStop = false;
+            this.eventLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.eventLog.BackColor = System.Drawing.Color.Black;
+            this.eventLog.ForeColor = System.Drawing.Color.Lime;
+            this.eventLog.Location = new System.Drawing.Point(12, 369);
+            this.eventLog.Multiline = true;
+            this.eventLog.Name = "eventLog";
+            this.eventLog.ReadOnly = true;
+            this.eventLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.eventLog.Size = new System.Drawing.Size(873, 106);
+            this.eventLog.TabIndex = 14;
             // 
-            // pictureBox6
+            // adressInfo
             // 
-            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(571, 161);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(278, 153);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox6.TabIndex = 5;
-            this.pictureBox6.TabStop = false;
+            this.adressInfo.Interval = 5000;
+            this.adressInfo.Tick += new System.EventHandler(this.adressInfo_Tick);
+            // 
+            // radioDate
+            // 
+            this.radioDate.AutoSize = true;
+            this.radioDate.Location = new System.Drawing.Point(573, 9);
+            this.radioDate.Name = "radioDate";
+            this.radioDate.Size = new System.Drawing.Size(56, 17);
+            this.radioDate.TabIndex = 7;
+            this.radioDate.Text = "Datum";
+            this.radioDate.UseVisualStyleBackColor = true;
+            this.radioDate.CheckedChanged += new System.EventHandler(this.radioDate_CheckedChanged);
+            // 
+            // radioAName
+            // 
+            this.radioAName.AutoSize = true;
+            this.radioAName.Location = new System.Drawing.Point(358, 9);
+            this.radioAName.Name = "radioAName";
+            this.radioAName.Size = new System.Drawing.Size(108, 17);
+            this.radioAName.TabIndex = 8;
+            this.radioAName.Text = "Application Name";
+            this.radioAName.UseVisualStyleBackColor = true;
+            this.radioAName.CheckedChanged += new System.EventHandler(this.radioAName_CheckedChanged);
+            // 
+            // radioWName
+            // 
+            this.radioWName.AutoSize = true;
+            this.radioWName.Location = new System.Drawing.Point(472, 9);
+            this.radioWName.Name = "radioWName";
+            this.radioWName.Size = new System.Drawing.Size(95, 17);
+            this.radioWName.TabIndex = 9;
+            this.radioWName.Text = "Window Name";
+            this.radioWName.UseVisualStyleBackColor = true;
+            this.radioWName.CheckedChanged += new System.EventHandler(this.radioWName_CheckedChanged);
+            // 
+            // radioText
+            // 
+            this.radioText.AutoSize = true;
+            this.radioText.Checked = true;
+            this.radioText.Location = new System.Drawing.Point(306, 9);
+            this.radioText.Name = "radioText";
+            this.radioText.Size = new System.Drawing.Size(46, 17);
+            this.radioText.TabIndex = 10;
+            this.radioText.TabStop = true;
+            this.radioText.Text = "Text";
+            this.radioText.UseVisualStyleBackColor = true;
+            this.radioText.CheckedChanged += new System.EventHandler(this.radioText_CheckedChanged);
             // 
             // Form1
             // 
@@ -520,12 +523,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.keyLoggerDataView)).EndInit();
             this.screenshot.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -556,10 +559,6 @@
         private System.Windows.Forms.Timer adressInfo;
         private System.Windows.Forms.Button search;
         private System.Windows.Forms.TextBox searchBox;
-        private System.Windows.Forms.CheckBox searchText;
-        private System.Windows.Forms.CheckBox searchWindowsName;
-        private System.Windows.Forms.CheckBox searchAppName;
-        private System.Windows.Forms.CheckBox searchDate;
         private System.Windows.Forms.DataGridView keyLoggerDataView;
         private System.Windows.Forms.DataGridViewTextBoxColumn keyLoggerDataViewDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn keyLoggerDataViewAppName;
@@ -572,6 +571,10 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.RadioButton radioText;
+        private System.Windows.Forms.RadioButton radioWName;
+        private System.Windows.Forms.RadioButton radioAName;
+        private System.Windows.Forms.RadioButton radioDate;
 
     }
 }

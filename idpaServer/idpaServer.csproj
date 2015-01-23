@@ -52,7 +52,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>idpaServer.Program</StartupObject>
+    <StartupObject>idpaServer.ConnectionManager</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>58353C7D7A6768BC391D005213AA9A95332AEC81</ManifestCertificateThumbprint>
@@ -70,8 +70,9 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IdpaTools">
-      <HintPath>..\..\IdpaTools\bin\Debug\IdpaTools.dll</HintPath>
+    <Reference Include="IdpaTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\IdpaTools\bin\Debug\IdpaTools.dll</HintPath>
     </Reference>
     <Reference Include="ServiceTools">
       <HintPath>C:\Users\Tobias\Downloads\ServiceTools.dll</HintPath>

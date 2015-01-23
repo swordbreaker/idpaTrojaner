@@ -13,13 +13,14 @@ namespace idpaServer
     {
         public static void Main(string[] args)
         {
+
             //saveClientDataToServer("http://www.swordbreacker.ch/idpa/index.php", "testName", "Windows Blabla");
 
-            Console.WriteLine(HasClientIpChangend("http://www.swordbreacker.ch/idpa/getip.php", 42));
+            //Console.WriteLine(HasClientIpChangend("http://www.swordbreacker.ch/idpa/getip.php", 42));
 
-            string msg = Console.ReadLine();
+            //string msg = Console.ReadLine();
 
-            SendFileToClient("127.0.0.1", @"C:\Temp\log.xml");
+            //SendFileToClient("127.0.0.1", @"C:\Temp\log.xml");
         }
 
         public static string GetLocalIp()
