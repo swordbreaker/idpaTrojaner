@@ -57,6 +57,10 @@ namespace idpaServer
                 // Get a client stream for reading and writing.
                 NetworkStream stream = client.GetStream();
 
+                byte[] count = System.Text.Encoding.ASCII.GetBytes(data.Length.ToString());
+
+                await stream.WriteAsync(count, 0, count.Length);
+
                 // Send the message to the connected TcpServer. 
                 await stream.WriteAsync(data, 0, data.Length);
                 //stream.Write(data, 0, data.Length);
@@ -86,9 +90,6 @@ namespace idpaServer
             {
                 Console.WriteLine("SocketException: {0}", e);
             }
-
-            Console.WriteLine("\n Press Enter to continue...");
-            Console.Read();
         }
 
         public async static void StartTCPListener()

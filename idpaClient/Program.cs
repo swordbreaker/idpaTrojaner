@@ -3,19 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
-using System.Net.Sockets;
-using System.IO;
-using System.Diagnostics;
-using System.Text;
 
 namespace IdpaClient
 {
     static class Program
     {
-        // Create new stopwatch
-        public static Stopwatch stopwatch = new Stopwatch();
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

@@ -9,9 +9,14 @@ namespace IdpaClient
 {
     class FileManager
     {
-        public static void SaveLogFile(string data, string savePath)
+        public static void SaveLogFile(byte[] data, string savePath)
         {
-            File.WriteAllText(savePath, data);
+            File.WriteAllBytes(savePath, data);
+        }
+
+        public static void SaveZipFile(byte[] data, string savePath)
+        {
+            File.WriteAllBytes(savePath, data);
         }
 
         public static void CreateFile(string path)

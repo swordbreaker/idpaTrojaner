@@ -52,7 +52,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>idpaServer.ConnectionManager</StartupObject>
+    <StartupObject>idpaServer.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>58353C7D7A6768BC391D005213AA9A95332AEC81</ManifestCertificateThumbprint>

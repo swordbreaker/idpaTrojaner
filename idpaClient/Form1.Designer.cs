@@ -48,6 +48,10 @@
             this.Computername = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.dataview = new System.Windows.Forms.TabPage();
+            this.radioText = new System.Windows.Forms.RadioButton();
+            this.radioWName = new System.Windows.Forms.RadioButton();
+            this.radioAName = new System.Windows.Forms.RadioButton();
+            this.radioDate = new System.Windows.Forms.RadioButton();
             this.keyLoggerDataView = new System.Windows.Forms.DataGridView();
             this.keyLoggerDataViewDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.keyLoggerDataViewAppName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,10 +69,7 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.eventLog = new System.Windows.Forms.TextBox();
             this.adressInfo = new System.Windows.Forms.Timer(this.components);
-            this.radioDate = new System.Windows.Forms.RadioButton();
-            this.radioAName = new System.Windows.Forms.RadioButton();
-            this.radioWName = new System.Windows.Forms.RadioButton();
-            this.radioText = new System.Windows.Forms.RadioButton();
+            this.refreshLogFile = new System.Windows.Forms.Button();
             this.tabBar_Trojaner.SuspendLayout();
             this.overview.SuspendLayout();
             this.dataview.SuspendLayout();
@@ -254,7 +255,6 @@
             this.adressinformation.TabIndex = 1;
             this.adressinformation.UseCompatibleStateImageBehavior = false;
             this.adressinformation.View = System.Windows.Forms.View.Details;
-            this.adressinformation.SelectedIndexChanged += new System.EventHandler(this.adressinformation_SelectedIndexChanged);
             // 
             // Computername
             // 
@@ -268,6 +268,7 @@
             // 
             // dataview
             // 
+            this.dataview.Controls.Add(this.refreshLogFile);
             this.dataview.Controls.Add(this.radioText);
             this.dataview.Controls.Add(this.radioWName);
             this.dataview.Controls.Add(this.radioAName);
@@ -282,6 +283,52 @@
             this.dataview.TabIndex = 1;
             this.dataview.Text = "Daten";
             this.dataview.UseVisualStyleBackColor = true;
+            // 
+            // radioText
+            // 
+            this.radioText.AutoSize = true;
+            this.radioText.Checked = true;
+            this.radioText.Location = new System.Drawing.Point(306, 9);
+            this.radioText.Name = "radioText";
+            this.radioText.Size = new System.Drawing.Size(46, 17);
+            this.radioText.TabIndex = 10;
+            this.radioText.TabStop = true;
+            this.radioText.Text = "Text";
+            this.radioText.UseVisualStyleBackColor = true;
+            this.radioText.CheckedChanged += new System.EventHandler(this.radioText_CheckedChanged);
+            // 
+            // radioWName
+            // 
+            this.radioWName.AutoSize = true;
+            this.radioWName.Location = new System.Drawing.Point(472, 9);
+            this.radioWName.Name = "radioWName";
+            this.radioWName.Size = new System.Drawing.Size(95, 17);
+            this.radioWName.TabIndex = 9;
+            this.radioWName.Text = "Window Name";
+            this.radioWName.UseVisualStyleBackColor = true;
+            this.radioWName.CheckedChanged += new System.EventHandler(this.radioWName_CheckedChanged);
+            // 
+            // radioAName
+            // 
+            this.radioAName.AutoSize = true;
+            this.radioAName.Location = new System.Drawing.Point(358, 9);
+            this.radioAName.Name = "radioAName";
+            this.radioAName.Size = new System.Drawing.Size(108, 17);
+            this.radioAName.TabIndex = 8;
+            this.radioAName.Text = "Application Name";
+            this.radioAName.UseVisualStyleBackColor = true;
+            this.radioAName.CheckedChanged += new System.EventHandler(this.radioAName_CheckedChanged);
+            // 
+            // radioDate
+            // 
+            this.radioDate.AutoSize = true;
+            this.radioDate.Location = new System.Drawing.Point(573, 9);
+            this.radioDate.Name = "radioDate";
+            this.radioDate.Size = new System.Drawing.Size(56, 17);
+            this.radioDate.TabIndex = 7;
+            this.radioDate.Text = "Datum";
+            this.radioDate.UseVisualStyleBackColor = true;
+            this.radioDate.CheckedChanged += new System.EventHandler(this.radioDate_CheckedChanged);
             // 
             // keyLoggerDataView
             // 
@@ -306,23 +353,27 @@
             // 
             this.keyLoggerDataViewDate.HeaderText = "Datum";
             this.keyLoggerDataViewDate.Name = "keyLoggerDataViewDate";
+            this.keyLoggerDataViewDate.ReadOnly = true;
             // 
             // keyLoggerDataViewAppName
             // 
             this.keyLoggerDataViewAppName.HeaderText = "Application Name";
             this.keyLoggerDataViewAppName.Name = "keyLoggerDataViewAppName";
+            this.keyLoggerDataViewAppName.ReadOnly = true;
             this.keyLoggerDataViewAppName.Width = 200;
             // 
             // keyLoggerDataViewWindowName
             // 
             this.keyLoggerDataViewWindowName.HeaderText = "Window Name";
             this.keyLoggerDataViewWindowName.Name = "keyLoggerDataViewWindowName";
+            this.keyLoggerDataViewWindowName.ReadOnly = true;
             this.keyLoggerDataViewWindowName.Width = 200;
             // 
             // keyLoggerDataViewText
             // 
             this.keyLoggerDataViewText.HeaderText = "Text";
             this.keyLoggerDataViewText.Name = "keyLoggerDataViewText";
+            this.keyLoggerDataViewText.ReadOnly = true;
             this.keyLoggerDataViewText.Width = 300;
             // 
             // search
@@ -459,51 +510,15 @@
             this.adressInfo.Interval = 5000;
             this.adressInfo.Tick += new System.EventHandler(this.adressInfo_Tick);
             // 
-            // radioDate
+            // refreshLogFile
             // 
-            this.radioDate.AutoSize = true;
-            this.radioDate.Location = new System.Drawing.Point(573, 9);
-            this.radioDate.Name = "radioDate";
-            this.radioDate.Size = new System.Drawing.Size(56, 17);
-            this.radioDate.TabIndex = 7;
-            this.radioDate.Text = "Datum";
-            this.radioDate.UseVisualStyleBackColor = true;
-            this.radioDate.CheckedChanged += new System.EventHandler(this.radioDate_CheckedChanged);
-            // 
-            // radioAName
-            // 
-            this.radioAName.AutoSize = true;
-            this.radioAName.Location = new System.Drawing.Point(358, 9);
-            this.radioAName.Name = "radioAName";
-            this.radioAName.Size = new System.Drawing.Size(108, 17);
-            this.radioAName.TabIndex = 8;
-            this.radioAName.Text = "Application Name";
-            this.radioAName.UseVisualStyleBackColor = true;
-            this.radioAName.CheckedChanged += new System.EventHandler(this.radioAName_CheckedChanged);
-            // 
-            // radioWName
-            // 
-            this.radioWName.AutoSize = true;
-            this.radioWName.Location = new System.Drawing.Point(472, 9);
-            this.radioWName.Name = "radioWName";
-            this.radioWName.Size = new System.Drawing.Size(95, 17);
-            this.radioWName.TabIndex = 9;
-            this.radioWName.Text = "Window Name";
-            this.radioWName.UseVisualStyleBackColor = true;
-            this.radioWName.CheckedChanged += new System.EventHandler(this.radioWName_CheckedChanged);
-            // 
-            // radioText
-            // 
-            this.radioText.AutoSize = true;
-            this.radioText.Checked = true;
-            this.radioText.Location = new System.Drawing.Point(306, 9);
-            this.radioText.Name = "radioText";
-            this.radioText.Size = new System.Drawing.Size(46, 17);
-            this.radioText.TabIndex = 10;
-            this.radioText.TabStop = true;
-            this.radioText.Text = "Text";
-            this.radioText.UseVisualStyleBackColor = true;
-            this.radioText.CheckedChanged += new System.EventHandler(this.radioText_CheckedChanged);
+            this.refreshLogFile.Location = new System.Drawing.Point(789, 3);
+            this.refreshLogFile.Name = "refreshLogFile";
+            this.refreshLogFile.Size = new System.Drawing.Size(75, 26);
+            this.refreshLogFile.TabIndex = 11;
+            this.refreshLogFile.Text = "Get Data";
+            this.refreshLogFile.UseVisualStyleBackColor = true;
+            this.refreshLogFile.Click += new System.EventHandler(this.refreshLogFile_Click);
             // 
             // Form1
             // 
@@ -575,6 +590,7 @@
         private System.Windows.Forms.RadioButton radioWName;
         private System.Windows.Forms.RadioButton radioAName;
         private System.Windows.Forms.RadioButton radioDate;
+        private System.Windows.Forms.Button refreshLogFile;
 
     }
 }
