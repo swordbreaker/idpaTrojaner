@@ -13,7 +13,7 @@ namespace IdpaClient
     {
         private static Stopwatch stopWatch = new Stopwatch();
 
-        public static string getPcInformations(string uri)
+        public static string GetPcInformations(string uri)
         {
             string result;
 

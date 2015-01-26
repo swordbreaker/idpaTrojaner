@@ -110,7 +110,7 @@ namespace IdpaClient
 
         private void getPcInformations()
         {
-            string xml = ConnectionManager.getPcInformations(URI_GET_PCINFO);
+            string xml = ConnectionManager.GetPcInformations(URI_GET_PCINFO);
 
             pcInformations = FileManager.DeserializePcInformations(xml, pcInformations);
 

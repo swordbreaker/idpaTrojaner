@@ -39,7 +39,7 @@ namespace idpaServer
             return localIP;
         }
 
-        public static async void SendFileToClient(String server, String filePath)
+        public static async void SendFileToClient(string server, string filePath)
         {
             try
             {

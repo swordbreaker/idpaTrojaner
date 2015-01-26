@@ -60,3 +60,4 @@ C:\Data\idpaTrojaner\idpaServer\obj\Debug\idpaServer.Properties.Resources.resour
 C:\Data\idpaTrojaner\idpaServer\obj\Debug\idpaServer.csproj.GenerateResource.Cache
 D:\IDPA\idpaTrojaner\idpaServer\bin\Debug\IdpaTools.dll
 D:\IDPA\idpaTrojaner\idpaServer\bin\Debug\IdpaTools.pdb
+C:\Data\idpaTrojaner\idpaServer\bin\Debug\IdpaTools.dll
