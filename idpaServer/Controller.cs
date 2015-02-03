@@ -67,7 +67,6 @@ namespace idpaServer
             myServerID = Properties.Settings.Default.id;
             myPcName = System.Environment.MachineName;
             myWinVers = Environment.OSVersion.ToString();
-            //localIp = ConnectionManager.GetLocalIp();
 
             //Ist these Pc in the Webserver Database when no create Entry
             if (myServerID == 0)
@@ -135,6 +134,7 @@ namespace idpaServer
                 case "getdata":
                     FileManager.ZipUserData(DATA_PATH, ZIP_PATH);
                     ConnectionManager.SendFileToClient(clientIp, ZIP_PATH);
+                    FileManager.DeletFile(ZIP_PATH);
                     break;
                 case "ping":
                     Console.WriteLine("Pong");

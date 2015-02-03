@@ -64,6 +64,19 @@ namespace idpaServer
             return true;
         }
 
+        public static bool DeletFile(string path)
+        {
+            try
+            {
+                File.Delete(path);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
         {
             Console.WriteLine("Start Copy Form Directory");

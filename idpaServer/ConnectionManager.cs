@@ -11,17 +11,6 @@ namespace idpaServer
 {
     class ConnectionManager
     {
-        public static void Main(string[] args)
-        {
-
-            //saveClientDataToServer("http://www.swordbreacker.ch/idpa/index.php", "testName", "Windows Blabla");
-
-            //Console.WriteLine(HasClientIpChangend("http://www.swordbreacker.ch/idpa/getip.php", 42));
-
-            //string msg = Console.ReadLine();
-
-            //SendFileToClient("127.0.0.1", @"C:\Temp\log.xml");
-        }
 
         public static string GetLocalIp()
         {
@@ -39,7 +28,7 @@ namespace idpaServer
             return localIP;
         }
 
-        public static async void SendFileToClient(string server, string filePath)
+        public static void SendFileToClient(string server, string filePath)
         {
             try
             {
@@ -52,6 +41,7 @@ namespace idpaServer
 
                 // Translate the passed message into ASCII and store it as a Byte array.
                 byte[] data = new byte[File.ReadAllBytes(filePath).Length];
+                byte[] response = new Byte[256];
                 data = File.ReadAllBytes(filePath);
 
                 // Get a client stream for reading and writing.
@@ -59,24 +49,59 @@ namespace idpaServer
 
                 byte[] count = System.Text.Encoding.ASCII.GetBytes(data.Length.ToString());
 
-                await stream.WriteAsync(count, 0, count.Length);
+                Console.WriteLine("Send File Length");
+                //await stream.WriteAsync(count, 0, count.Length);
 
+                stream.Write(count, 0, count.Length);
                 // Send the message to the connected TcpServer. 
-                await stream.WriteAsync(data, 0, data.Length);
-                //stream.Write(data, 0, data.Length);
 
-                // Receive the TcpServer.response.
-                // Buffer to store the response bytes.
-                data = new Byte[256];
+                response = new byte[256];
+                Console.WriteLine("Wait for Response");
+                //await stream.ReadAsync(response, 0, response.Length);
+                int i;
 
-                // String to store the response ASCII representation.
-                String responseData = String.Empty;
+                stream.Read(response, 0, response.Length);
+                Console.WriteLine("Response: " + System.Text.Encoding.ASCII.GetString(response));
 
+                stream.Write(data, 0, data.Length);
+                Console.WriteLine("Send File");
+
+                //await stream.WriteAsync(data, 0, data.Length);
+                    
+                response = new byte[1];
+                Console.WriteLine("Wait for Response");
                 // Read the first batch of the TcpServer response bytes.
-                Int32 bytes = stream.Read(data, 0, data.Length);
-                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
 
-                Console.WriteLine("Received: {0}", responseData);
+                //await stream.ReadAsync(response, 0, response.Length);
+
+                stream.Read(response, 0, response.Length);
+
+                if (response[response.Length - 1] == data[data.Length - 1])
+                {
+                    Console.WriteLine("Hash code identical 1");
+                    //await stream.WriteAsync(System.Text.Encoding.ASCII.GetBytes("true"), 0, System.Text.Encoding.ASCII.GetBytes("true").Length);
+                    try
+                    {
+                        stream.Write(System.Text.Encoding.ASCII.GetBytes("true"), 0, System.Text.Encoding.ASCII.GetBytes("true").Length);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Error");
+                    }
+                    finally
+                    {
+                        Console.WriteLine("Hash code identical");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Hash code not identical 1");
+                    //await stream.WriteAsync(System.Text.Encoding.ASCII.GetBytes("false"), 0, System.Text.Encoding.ASCII.GetBytes("false").Length);
+                    stream.Write(System.Text.Encoding.ASCII.GetBytes("false"), 0, System.Text.Encoding.ASCII.GetBytes("false").Length);
+                    Console.WriteLine("Hash code not identical");
+                    //await stream.ReadAsync(response, 0, 1);
+                }
+                //responseData = System.Text.Encoding.ASCII.GetString(response, 0, bytes);
 
                 // Close everything.
                 stream.Close();

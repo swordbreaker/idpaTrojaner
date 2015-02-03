@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace IdpaClient
@@ -12,6 +13,7 @@ namespace IdpaClient
     class ConnectionManager
     {
         private static Stopwatch stopWatch = new Stopwatch();
+        private static Form1 activeForm = (System.Windows.Forms.Application.OpenForms["Form1"] as Form1);
 
         public static string GetPcInformations(string uri)
         {
@@ -101,22 +103,10 @@ namespace IdpaClient
 
                 stopWatch.Restart();
                 // Send the message to the connected TcpServer. 
-                stream.Write(data, 0, data.Length);
+
+                await stream.WriteAsync(data, 0, data.Length);
                 //stream.Write(data, 0, data.Length);
-
-                // Receive the TcpServer.response.
-                // Buffer to store the response bytes.
-                data = new Byte[256];
-
-                // String to store the response ASCII representation.
-                String responseData = String.Empty;
-
-                // Read the first batch of the TcpServer response bytes.
-                Int32 bytes = stream.Read(data, 0, data.Length);
                 stopWatch.Stop();
-
-                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                Console.WriteLine("Received: {0}", responseData);
 
                 // Close everything.
                 stream.Close();
@@ -248,37 +238,93 @@ namespace IdpaClient
                 // Get a stream object for reading and writing
                 NetworkStream stream = client.GetStream();
 
-                Int32 count = 50000;
+                int count = 0;
 
-                byte[] result;
-                result = new byte[count];
+                byte[] resultDataLenth;
+                byte[] resultFile = new byte[0];;
+                byte[] resultHash;
+                resultDataLenth = new byte[256];
+                resultHash = new byte[256];
 
-                await stream.ReadAsync(result, 0, count);
+                bool hashOK = false;
 
-                data = System.Text.Encoding.ASCII.GetString(result);
-                count = int.Parse(data);
-                result = new byte[count];
+                //Get File Lenth
+                Console.WriteLine("Read File Lenght");
 
-                // Loop to receive all the data sent by the client.
+                await stream.ReadAsync(resultDataLenth, 0, resultDataLenth.Length);
+                    
+                data = System.Text.Encoding.ASCII.GetString(resultDataLenth);
+                try
+                {
+                    count = int.Parse(data);
+                }
+                catch
+                {
+                    count = 265;
+                    Console.WriteLine("Int error");
+                }
 
-                await stream.ReadAsync(result, 0, count);
+                Console.WriteLine("Count is " + count);
 
-                if (fileId == 1)
-                    Form1.storeLogFile(result);
-                else
-                    Form1.storeData(result);
+                resultFile = new byte[count];
 
-                byte[] msg = System.Text.Encoding.ASCII.GetBytes("File succesfull send");
+                activeForm.print("File size: " + count + " KB");
+                Console.WriteLine("Write Response");
+                await stream.WriteAsync(resultDataLenth, 0, resultDataLenth.Length);
+                    
+                Console.WriteLine("Read File");
+                await stream.ReadAsync(resultFile, 0, count);
+                    
+                byte[] respond = new byte[1];
+                respond[0] = resultFile[resultFile.Length - 1];
 
                 // Send back a response.
-                stream.Write(msg, 0, msg.Length);
+                Console.WriteLine("Write Response");
+                await stream.WriteAsync(respond, 0, respond.Length);
+                    
+                resultHash = new byte[256];
+
+                await stream.ReadAsync(resultHash, 0, resultHash.Length);
+                    
+                Console.WriteLine("Read File Check");
+                Console.WriteLine("File Check ist: " + System.Text.Encoding.ASCII.GetString(resultHash));
+
+                try
+                {
+                    hashOK = bool.Parse(System.Text.Encoding.ASCII.GetString(resultHash));
+                }
+                catch
+                {
+                    activeForm.print("Bool Error :O");
+                    hashOK = false;
+                }
+
+                if (!hashOK)
+                {
+                    //await stream.WriteAsync(resultHash, 0, resultHash.Length);
+                    activeForm.print("Error accurred while downloading");
+                    stream.Close();
+                    client.Close();
+                    server.Stop();
+                    return;
+                }
+
+                if (fileId == 1)
+                    activeForm.storeLogFile(resultFile);
+                else
+                    activeForm.storeData(resultFile);
 
                 // Shutdown and end connection
+                stream.Close();
                 client.Close();
             }
             catch (SocketException e)
             {
                 Console.WriteLine("SocketException: {0}", e);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: {0}", e);
             }
             finally
             {

