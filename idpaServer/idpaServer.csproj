@@ -94,7 +94,6 @@
     <Compile Include="ConnectionManager.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="FileManager.cs" />
-    <Compile Include="FileScanner.cs" />
     <Compile Include="Keylogger.cs" />
     <Compile Include="PrintScreen.cs" />
     <Compile Include="Program.cs" />

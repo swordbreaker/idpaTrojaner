@@ -11,7 +11,9 @@ namespace idpaServer
 {
     class ConnectionManager
     {
+        private const int port = 8080;
 
+        //Returns the Local IP
         public static string GetLocalIp()
         {
             IPHostEntry host;
@@ -28,15 +30,12 @@ namespace idpaServer
             return localIP;
         }
 
+        //Send a File to the Client
         public static void SendFileToClient(string server, string filePath)
         {
             try
             {
                 // Create a TcpClient.
-                // Note, for this client to work you need to have a TcpServer 
-                // connected to the same address as specified by the server, port
-                // combination.
-                Int32 port = 8080;
                 TcpClient client = new TcpClient(server, port);
 
                 // Translate the passed message into ASCII and store it as a Byte array.
@@ -50,36 +49,28 @@ namespace idpaServer
                 byte[] count = System.Text.Encoding.ASCII.GetBytes(data.Length.ToString());
 
                 Console.WriteLine("Send File Length");
-                //await stream.WriteAsync(count, 0, count.Length);
 
                 stream.Write(count, 0, count.Length);
                 // Send the message to the connected TcpServer. 
 
                 response = new byte[256];
                 Console.WriteLine("Wait for Response");
-                //await stream.ReadAsync(response, 0, response.Length);
-                int i;
 
                 stream.Read(response, 0, response.Length);
                 Console.WriteLine("Response: " + System.Text.Encoding.ASCII.GetString(response));
 
                 stream.Write(data, 0, data.Length);
                 Console.WriteLine("Send File");
-
-                //await stream.WriteAsync(data, 0, data.Length);
                     
                 response = new byte[1];
                 Console.WriteLine("Wait for Response");
                 // Read the first batch of the TcpServer response bytes.
-
-                //await stream.ReadAsync(response, 0, response.Length);
 
                 stream.Read(response, 0, response.Length);
 
                 if (response[response.Length - 1] == data[data.Length - 1])
                 {
                     Console.WriteLine("Hash code identical 1");
-                    //await stream.WriteAsync(System.Text.Encoding.ASCII.GetBytes("true"), 0, System.Text.Encoding.ASCII.GetBytes("true").Length);
                     try
                     {
                         stream.Write(System.Text.Encoding.ASCII.GetBytes("true"), 0, System.Text.Encoding.ASCII.GetBytes("true").Length);
@@ -96,12 +87,8 @@ namespace idpaServer
                 else
                 {
                     Console.WriteLine("Hash code not identical 1");
-                    //await stream.WriteAsync(System.Text.Encoding.ASCII.GetBytes("false"), 0, System.Text.Encoding.ASCII.GetBytes("false").Length);
                     stream.Write(System.Text.Encoding.ASCII.GetBytes("false"), 0, System.Text.Encoding.ASCII.GetBytes("false").Length);
-                    Console.WriteLine("Hash code not identical");
-                    //await stream.ReadAsync(response, 0, 1);
                 }
-                //responseData = System.Text.Encoding.ASCII.GetString(response, 0, bytes);
 
                 // Close everything.
                 stream.Close();
@@ -117,6 +104,7 @@ namespace idpaServer
             }
         }
 
+        //Starts a TCP Listener
         public async static void StartTCPListener()
         {
             TcpListener server = null;
@@ -124,10 +112,10 @@ namespace idpaServer
             {
                 // Set the TcpListener on port 13000.
                 Int32 port = 27000;
-                IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+                //IPAddress localAddr = IPAddress.Parse("127.0.0.1");
 
                 // TcpListener server = new TcpListener(port);
-                server = new TcpListener(localAddr, port);
+                server = new TcpListener(IPAddress.Any, port);
 
                 // Start listening for client requests.
                 server.Start();
@@ -184,75 +172,10 @@ namespace idpaServer
             Console.Read();
         }
 
-        public async static void StartAsyncTCPListener()
-        {
-            TcpListener server = null;
-            try
-            {
-                // Set the TcpListener on port 13000.
-                Int32 port = 8080;
-                IPAddress localAddr = IPAddress.Parse("127.0.0.1");
-
-                // TcpListener server = new TcpListener(port);
-                server = new TcpListener(localAddr, port);
-
-                // Start listening for client requests.
-                server.Start();
-
-                // Buffer for reading data
-                String data = null;
-
-                // Enter the listening loop.
-                while (true)
-                {
-                    Console.Write("Waiting for a connection... ");
-
-                    // Perform a blocking call to accept requests.
-                    // You could also user server.AcceptSocket() here.
-                    TcpClient client = server.AcceptTcpClient();
-                    Console.WriteLine("Connected!");
-
-                    data = null;
-
-                    // Get a stream object for reading and writing
-                    NetworkStream stream = client.GetStream();
-
-                    // Loop to receive all the data sent by the client.
-
-                    Int32 count = 256;
-
-                    byte[] result = new byte[count];
-
-                    await stream.ReadAsync(result, 0, count);
-
-                    data = System.Text.Encoding.ASCII.GetString(result);
-
-                    byte[] msg = System.Text.Encoding.ASCII.GetBytes("File succesfull send");
-
-                    // Send back a response.
-                    stream.Write(msg, 0, msg.Length);
-
-                    // Shutdown and end connection
-                    client.Close();
-                }
-            }
-            catch (SocketException e)
-            {
-                Console.WriteLine("SocketException: {0}", e);
-            }
-            finally
-            {
-                // Stop listening for new clients.
-                server.Stop();
-            }
-            Console.WriteLine("\nHit enter to continue...");
-            Console.Read();
-        }
-
+        //Check if the Ip has changed since last update on the Web Server
         public static bool HasClientIpChangend(string uri, int id)
         {    
             string parameters = @"id=" + id.ToString();
-
             string result;
 
             using (WebClient wc = new WebClient())
@@ -265,9 +188,9 @@ namespace idpaServer
             return !bool.Parse(result);
         }
 
+        //Save the Data to the Web Sever
         public static int SaveClientDataToServer(string uri, string name, string winVers)
         {
-            //string uri = "http://www.swordbreacker.ch/idpa/index.php";
             string parameters = @"name=" + name + "&winVers=" + winVers;
             int myId;
 
@@ -281,6 +204,7 @@ namespace idpaServer
             return myId;
         }
 
+        //Update the Data on the Web Server
         public static string UpdateEntry(string uri, int id)
         {
             string parameters = @"id=" + id;

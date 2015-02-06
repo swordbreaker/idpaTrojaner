@@ -13,6 +13,8 @@ namespace IdpaClient
     class ConnectionManager
     {
         private static Stopwatch stopWatch = new Stopwatch();
+        private const int port = 8080;
+        private static string localIP = "192.168.178.22";
         private static Form1 activeForm = (System.Windows.Forms.Application.OpenForms["Form1"] as Form1);
 
         public static string GetPcInformations(string uri)
@@ -32,10 +34,6 @@ namespace IdpaClient
             try
             {
                 // Create a TcpClient.
-                // Note, for this client to work you need to have a TcpServer 
-                // connected to the same address as specified by the server, port
-                // combination.
-                Int32 port = 27000;
                 TcpClient client = new TcpClient(server, port);
 
                 // Translate the passed message into ASCII and store it as a Byte array.
@@ -45,12 +43,9 @@ namespace IdpaClient
                 // Get a client stream for reading and writing.
                 NetworkStream stream = client.GetStream();
 
-
                 stream.Write(data, 0, data.Length);
 
                 // Send the message to the connected TcpServer. 
-                //await stream.WriteAsync(data, 0, data.Length);
-                //stream.Write(data, 0, data.Length);
 
                 // Receive the TcpServer.response.
                 // Buffer to store the response bytes.
@@ -88,10 +83,6 @@ namespace IdpaClient
             try
             {
                 // Create a TcpClient.
-                // Note, for this client to work you need to have a TcpServer 
-                // connected to the same address as specified by the server, port
-                // combination.
-                Int32 port = 27000;
                 TcpClient client = new TcpClient(server, port);
 
                 // Translate the passed message into ASCII and store it as a Byte array.
@@ -121,90 +112,9 @@ namespace IdpaClient
             }
             catch
             {
-                //Console.WriteLine("SocketException: {0}", e);
                 return -1;
             }
         }
-
-        //public static void startTCPListener()
-        //{
-        //    TcpListener server = null;
-        //    try
-        //    {
-        //        // Set the TcpListener on port 13000.
-        //        Int32 port = 8080;
-        //        IPAddress localAddr = IPAddress.Parse("127.0.0.1");
-
-        //        // TcpListener server = new TcpListener(port);
-        //        server = new TcpListener(localAddr, port);
-
-        //        // Start listening for client requests.
-        //        server.Start();
-
-        //        // Buffer for reading data
-        //        //Byte[] bytes = new Byte[256];
-        //        List<Byte> bytes = new List<byte>();
-        //        String data = null;
-
-        //        // Enter the listening loop.
-        //        while (true)
-        //        {
-        //            Console.Write("Waiting for a connection... ");
-
-        //            // Perform a blocking call to accept requests.
-        //            // You could also user server.AcceptSocket() here.
-        //            TcpClient client = server.AcceptTcpClient();
-        //            Console.WriteLine("Connected!");
-
-        //            data = null;
-
-        //            // Get a stream object for reading and writing
-        //            NetworkStream stream = client.GetStream();
-
-        //            int i;
-
-        //            // Loop to receive all the data sent by the client.
-        //            while ((i = stream.Read(bytes.ToArray(), 0, 256)) != 0)
-        //            {
-        //                // Translate data bytes to a ASCII string.
-        //                data = System.Text.Encoding.ASCII.GetString(bytes.ToArray(), 0, i);
-        //                Console.WriteLine("Received: {0}", data);
-
-        //                // Process the data sent by the client.
-        //                data = data.ToUpper();
-
-        //                Byte[] fileData = System.Text.Encoding.ASCII.GetBytes(data.ToArray());
-        //                data = System.Text.Encoding.ASCII.GetString(fileData);
-
-        //                FileManager.CreateFile(@"C:\Temp\log_send.xml");
-        //                FileManager.SaveLogFile(data, @"C:\Temp\log_send.xml");
-
-        //                Console.WriteLine("Sent: {0}", data);
-        //                Console.WriteLine("Penis");
-        //            }
-
-        //            byte[] msg = System.Text.Encoding.ASCII.GetBytes("File succesfull send");
-
-        //            // Send back a response.
-        //            stream.Write(msg, 0, msg.Length);
-
-
-        //            // Shutdown and end connection
-        //            client.Close();
-        //        }
-        //    }
-        //    catch (SocketException e)
-        //    {
-        //        Console.WriteLine("SocketException: {0}", e);
-        //    }
-        //    finally
-        //    {
-        //        // Stop listening for new clients.
-        //        server.Stop();
-        //    }
-        //    Console.WriteLine("\nHit enter to continue...");
-        //    Console.Read();
-        //}
 
         public async static Task startAsyncTCPListener(int fileId)
         {
@@ -212,11 +122,10 @@ namespace IdpaClient
             try
             {
                 // Set the TcpListener on port 13000.
-                Int32 port = 8080;
-                IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+                //IPAddress localAddr = IPAddress.Parse(localIP);
 
                 // TcpListener server = new TcpListener(port);
-                server = new TcpListener(localAddr, port);
+                server = new TcpListener(IPAddress.Any, port);
 
                 // Start listening for client requests.
                 server.Start();

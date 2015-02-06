@@ -68,7 +68,7 @@ namespace idpaServer
             myPcName = System.Environment.MachineName;
             myWinVers = Environment.OSVersion.ToString();
 
-            //Ist these Pc in the Webserver Database when no create Entry
+            //Is this Pc in the Webserver Database when no create Entry
             if (myServerID == 0)
             {
                 Console.WriteLine("Create Entry in the Database");
