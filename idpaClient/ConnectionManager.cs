@@ -13,7 +13,7 @@ namespace IdpaClient
     class ConnectionManager
     {
         private static Stopwatch stopWatch = new Stopwatch();
-        private const int port = 8080;
+        private const int port = 12345;
         private static string localIP = "192.168.178.22";
         private static Form1 activeForm = (System.Windows.Forms.Application.OpenForms["Form1"] as Form1);
 
@@ -78,7 +78,7 @@ namespace IdpaClient
             }
         }
 
-        public static async Task<double> Ping(string server)
+        public static async void Ping(string server)
         {
             try
             {
@@ -103,16 +103,16 @@ namespace IdpaClient
                 stream.Close();
                 client.Close();
 
-                return stopWatch.Elapsed.TotalMilliseconds;
+                activeForm.ping = stopWatch.Elapsed.TotalMilliseconds;
             }
             catch (ArgumentNullException e)
             {
                 Console.WriteLine("ArgumentNullException: {0}", e);
-                return -1;
+                activeForm.ping = -1;
             }
             catch
             {
-                return -1;
+                activeForm.ping = -1;
             }
         }
 
@@ -177,7 +177,9 @@ namespace IdpaClient
 
                 resultFile = new byte[count];
 
-                activeForm.print("File size: " + count + " KB");
+                //activeForm.print("File size: " + count + " KB");
+                activeForm.printMsg += "File size: " + count + " KB\n\r";
+
                 Console.WriteLine("Write Response");
                 await stream.WriteAsync(resultDataLenth, 0, resultDataLenth.Length);
                     
@@ -204,14 +206,13 @@ namespace IdpaClient
                 }
                 catch
                 {
-                    activeForm.print("Bool Error :O");
                     hashOK = false;
                 }
 
                 if (!hashOK)
                 {
                     //await stream.WriteAsync(resultHash, 0, resultHash.Length);
-                    activeForm.print("Error accurred while downloading");
+                    activeForm.printMsg += "Error accurred while downloading \n\r";
                     stream.Close();
                     client.Close();
                     server.Stop();

