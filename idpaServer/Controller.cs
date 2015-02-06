@@ -40,7 +40,8 @@ namespace idpaServer
         private static string myPcName;
         private static string myWinVers;
         private static int myServerID;
-        private static string localIp = "127.0.0.1";
+        private static string myIp;
+        private static string localIp = "192.168.178.22";
         private static string clientIp = "127.0.0.1";
 
         //Timers
@@ -67,23 +68,28 @@ namespace idpaServer
             myServerID = Properties.Settings.Default.id;
             myPcName = System.Environment.MachineName;
             myWinVers = Environment.OSVersion.ToString();
+            //myIp = ConnectionManager.GetLocalIp();
+            myIp = localIp;
 
             //Is this Pc in the Webserver Database when no create Entry
             if (myServerID == 0)
             {
                 Console.WriteLine("Create Entry in the Database");
-                myServerID = ConnectionManager.SaveClientDataToServer(API_URI_SAVE_CLIENT_DATA, myPcName, myWinVers);
+                myServerID = ConnectionManager.SaveClientDataToServer(API_URI_SAVE_CLIENT_DATA, myPcName, myWinVers, myIp);
                 Properties.Settings.Default.id = myServerID;
                 Properties.Settings.Default.Save();
                 Console.WriteLine("Entry Created with the ID {0}", myServerID);
             }
 
             //Check if IP is up to Date when no Update Entry
-            else if (ConnectionManager.HasClientIpChangend(API_URI_CHANGE_IP, myServerID))
+            else if (ConnectionManager.HasClientIpChangend(API_URI_CHANGE_IP, myServerID, myIp))
             {
                 Console.WriteLine("IP has changed Update Entry");
-                Console.WriteLine(ConnectionManager.UpdateEntry(API_URI_UPDATE_IP, myServerID));
+                //Console.WriteLine(ConnectionManager.UpdateEntry(API_URI_UPDATE_IP, myServerID));
+                Console.WriteLine(ConnectionManager.UpdateEntry(API_URI_UPDATE_IP, myServerID, myIp));
             }
+
+
               
             //Create Timers
             timerPrintScreen = new System.Timers.Timer(PRINT_SCREEN_INTERVAL);

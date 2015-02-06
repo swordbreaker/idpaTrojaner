@@ -32,33 +32,33 @@
             this.eventLog = new System.Windows.Forms.TextBox();
             this.adressInfo = new System.Windows.Forms.Timer(this.components);
             this.dataview = new System.Windows.Forms.TabPage();
-            this.searchBox = new System.Windows.Forms.TextBox();
-            this.keyLoggerDataView = new System.Windows.Forms.DataGridView();
-            this.keyLoggerDataViewText = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.keyLoggerDataViewWindowName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.keyLoggerDataViewAppName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.keyLoggerDataViewDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.radioDate = new System.Windows.Forms.RadioButton();
-            this.radioAName = new System.Windows.Forms.RadioButton();
-            this.radioWName = new System.Windows.Forms.RadioButton();
-            this.radioText = new System.Windows.Forms.RadioButton();
             this.refreshLogFile = new System.Windows.Forms.Button();
+            this.radioText = new System.Windows.Forms.RadioButton();
+            this.radioWName = new System.Windows.Forms.RadioButton();
+            this.radioAName = new System.Windows.Forms.RadioButton();
+            this.radioDate = new System.Windows.Forms.RadioButton();
+            this.keyLoggerDataView = new System.Windows.Forms.DataGridView();
+            this.keyLoggerDataViewDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.keyLoggerDataViewAppName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.keyLoggerDataViewWindowName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.keyLoggerDataViewText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.searchBox = new System.Windows.Forms.TextBox();
             this.overview = new System.Windows.Forms.TabPage();
+            this.pcWindowsData = new System.Windows.Forms.Label();
+            this.pcIPData = new System.Windows.Forms.Label();
+            this.pcOnlineData = new System.Windows.Forms.Label();
+            this.pcPingData = new System.Windows.Forms.Label();
+            this.pcNameData = new System.Windows.Forms.Label();
+            this.pcWindows = new System.Windows.Forms.Label();
+            this.pcOnline = new System.Windows.Forms.Label();
+            this.pcIP = new System.Windows.Forms.Label();
+            this.pcPing = new System.Windows.Forms.Label();
+            this.pcName = new System.Windows.Forms.Label();
+            this.pcInfo = new System.Windows.Forms.Label();
+            this.getData = new System.Windows.Forms.Button();
             this.adressinformation = new System.Windows.Forms.ListView();
             this.Computername = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IP = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.getData = new System.Windows.Forms.Button();
-            this.pcInfo = new System.Windows.Forms.Label();
-            this.pcName = new System.Windows.Forms.Label();
-            this.pcPing = new System.Windows.Forms.Label();
-            this.pcIP = new System.Windows.Forms.Label();
-            this.pcOnline = new System.Windows.Forms.Label();
-            this.pcWindows = new System.Windows.Forms.Label();
-            this.pcNameData = new System.Windows.Forms.Label();
-            this.pcPingData = new System.Windows.Forms.Label();
-            this.pcOnlineData = new System.Windows.Forms.Label();
-            this.pcIPData = new System.Windows.Forms.Label();
-            this.pcWindowsData = new System.Windows.Forms.Label();
             this.tabBar_Trojaner = new System.Windows.Forms.TabControl();
             this.dataview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.keyLoggerDataView)).BeginInit();
@@ -77,12 +77,12 @@
             this.eventLog.Name = "eventLog";
             this.eventLog.ReadOnly = true;
             this.eventLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.eventLog.Size = new System.Drawing.Size(873, 106);
+            this.eventLog.Size = new System.Drawing.Size(972, 106);
             this.eventLog.TabIndex = 14;
             // 
             // adressInfo
             // 
-            this.adressInfo.Interval = 5000;
+            this.adressInfo.Interval = 1000;
             this.adressInfo.Tick += new System.EventHandler(this.adressInfo_Tick);
             // 
             // dataview
@@ -102,16 +102,61 @@
             this.dataview.Text = "Daten";
             this.dataview.UseVisualStyleBackColor = true;
             // 
-            // searchBox
+            // refreshLogFile
             // 
-            this.searchBox.AcceptsReturn = true;
-            this.searchBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.searchBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.searchBox.Location = new System.Drawing.Point(6, 6);
-            this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(213, 20);
-            this.searchBox.TabIndex = 0;
-            this.searchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchBox_OnKeyDown);
+            this.refreshLogFile.Location = new System.Drawing.Point(789, 3);
+            this.refreshLogFile.Name = "refreshLogFile";
+            this.refreshLogFile.Size = new System.Drawing.Size(75, 26);
+            this.refreshLogFile.TabIndex = 11;
+            this.refreshLogFile.Text = "Get Data";
+            this.refreshLogFile.UseVisualStyleBackColor = true;
+            this.refreshLogFile.Click += new System.EventHandler(this.refreshLogFile_Click);
+            // 
+            // radioText
+            // 
+            this.radioText.AutoSize = true;
+            this.radioText.Checked = true;
+            this.radioText.Location = new System.Drawing.Point(306, 9);
+            this.radioText.Name = "radioText";
+            this.radioText.Size = new System.Drawing.Size(46, 17);
+            this.radioText.TabIndex = 10;
+            this.radioText.TabStop = true;
+            this.radioText.Text = "Text";
+            this.radioText.UseVisualStyleBackColor = true;
+            this.radioText.CheckedChanged += new System.EventHandler(this.radioText_CheckedChanged);
+            // 
+            // radioWName
+            // 
+            this.radioWName.AutoSize = true;
+            this.radioWName.Location = new System.Drawing.Point(472, 9);
+            this.radioWName.Name = "radioWName";
+            this.radioWName.Size = new System.Drawing.Size(95, 17);
+            this.radioWName.TabIndex = 9;
+            this.radioWName.Text = "Window Name";
+            this.radioWName.UseVisualStyleBackColor = true;
+            this.radioWName.CheckedChanged += new System.EventHandler(this.radioWName_CheckedChanged);
+            // 
+            // radioAName
+            // 
+            this.radioAName.AutoSize = true;
+            this.radioAName.Location = new System.Drawing.Point(358, 9);
+            this.radioAName.Name = "radioAName";
+            this.radioAName.Size = new System.Drawing.Size(108, 17);
+            this.radioAName.TabIndex = 8;
+            this.radioAName.Text = "Application Name";
+            this.radioAName.UseVisualStyleBackColor = true;
+            this.radioAName.CheckedChanged += new System.EventHandler(this.radioAName_CheckedChanged);
+            // 
+            // radioDate
+            // 
+            this.radioDate.AutoSize = true;
+            this.radioDate.Location = new System.Drawing.Point(573, 9);
+            this.radioDate.Name = "radioDate";
+            this.radioDate.Size = new System.Drawing.Size(56, 17);
+            this.radioDate.TabIndex = 7;
+            this.radioDate.Text = "Datum";
+            this.radioDate.UseVisualStyleBackColor = true;
+            this.radioDate.CheckedChanged += new System.EventHandler(this.radioDate_CheckedChanged);
             // 
             // keyLoggerDataView
             // 
@@ -132,19 +177,11 @@
             this.keyLoggerDataView.Size = new System.Drawing.Size(855, 288);
             this.keyLoggerDataView.TabIndex = 6;
             // 
-            // keyLoggerDataViewText
+            // keyLoggerDataViewDate
             // 
-            this.keyLoggerDataViewText.HeaderText = "Text";
-            this.keyLoggerDataViewText.Name = "keyLoggerDataViewText";
-            this.keyLoggerDataViewText.ReadOnly = true;
-            this.keyLoggerDataViewText.Width = 300;
-            // 
-            // keyLoggerDataViewWindowName
-            // 
-            this.keyLoggerDataViewWindowName.HeaderText = "Window Name";
-            this.keyLoggerDataViewWindowName.Name = "keyLoggerDataViewWindowName";
-            this.keyLoggerDataViewWindowName.ReadOnly = true;
-            this.keyLoggerDataViewWindowName.Width = 200;
+            this.keyLoggerDataViewDate.HeaderText = "Datum";
+            this.keyLoggerDataViewDate.Name = "keyLoggerDataViewDate";
+            this.keyLoggerDataViewDate.ReadOnly = true;
             // 
             // keyLoggerDataViewAppName
             // 
@@ -153,67 +190,30 @@
             this.keyLoggerDataViewAppName.ReadOnly = true;
             this.keyLoggerDataViewAppName.Width = 200;
             // 
-            // keyLoggerDataViewDate
+            // keyLoggerDataViewWindowName
             // 
-            this.keyLoggerDataViewDate.HeaderText = "Datum";
-            this.keyLoggerDataViewDate.Name = "keyLoggerDataViewDate";
-            this.keyLoggerDataViewDate.ReadOnly = true;
+            this.keyLoggerDataViewWindowName.HeaderText = "Window Name";
+            this.keyLoggerDataViewWindowName.Name = "keyLoggerDataViewWindowName";
+            this.keyLoggerDataViewWindowName.ReadOnly = true;
+            this.keyLoggerDataViewWindowName.Width = 200;
             // 
-            // radioDate
+            // keyLoggerDataViewText
             // 
-            this.radioDate.AutoSize = true;
-            this.radioDate.Location = new System.Drawing.Point(573, 9);
-            this.radioDate.Name = "radioDate";
-            this.radioDate.Size = new System.Drawing.Size(56, 17);
-            this.radioDate.TabIndex = 7;
-            this.radioDate.Text = "Datum";
-            this.radioDate.UseVisualStyleBackColor = true;
-            this.radioDate.CheckedChanged += new System.EventHandler(this.radioDate_CheckedChanged);
+            this.keyLoggerDataViewText.HeaderText = "Text";
+            this.keyLoggerDataViewText.Name = "keyLoggerDataViewText";
+            this.keyLoggerDataViewText.ReadOnly = true;
+            this.keyLoggerDataViewText.Width = 300;
             // 
-            // radioAName
+            // searchBox
             // 
-            this.radioAName.AutoSize = true;
-            this.radioAName.Location = new System.Drawing.Point(358, 9);
-            this.radioAName.Name = "radioAName";
-            this.radioAName.Size = new System.Drawing.Size(108, 17);
-            this.radioAName.TabIndex = 8;
-            this.radioAName.Text = "Application Name";
-            this.radioAName.UseVisualStyleBackColor = true;
-            this.radioAName.CheckedChanged += new System.EventHandler(this.radioAName_CheckedChanged);
-            // 
-            // radioWName
-            // 
-            this.radioWName.AutoSize = true;
-            this.radioWName.Location = new System.Drawing.Point(472, 9);
-            this.radioWName.Name = "radioWName";
-            this.radioWName.Size = new System.Drawing.Size(95, 17);
-            this.radioWName.TabIndex = 9;
-            this.radioWName.Text = "Window Name";
-            this.radioWName.UseVisualStyleBackColor = true;
-            this.radioWName.CheckedChanged += new System.EventHandler(this.radioWName_CheckedChanged);
-            // 
-            // radioText
-            // 
-            this.radioText.AutoSize = true;
-            this.radioText.Checked = true;
-            this.radioText.Location = new System.Drawing.Point(306, 9);
-            this.radioText.Name = "radioText";
-            this.radioText.Size = new System.Drawing.Size(46, 17);
-            this.radioText.TabIndex = 10;
-            this.radioText.TabStop = true;
-            this.radioText.Text = "Text";
-            this.radioText.UseVisualStyleBackColor = true;
-            this.radioText.CheckedChanged += new System.EventHandler(this.radioText_CheckedChanged);
-            // 
-            // refreshLogFile
-            // 
-            this.refreshLogFile.Location = new System.Drawing.Point(789, 3);
-            this.refreshLogFile.Name = "refreshLogFile";
-            this.refreshLogFile.Size = new System.Drawing.Size(75, 26);
-            this.refreshLogFile.TabIndex = 11;
-            this.refreshLogFile.Text = "Get Data";
-            this.refreshLogFile.UseVisualStyleBackColor = true;
-            this.refreshLogFile.Click += new System.EventHandler(this.refreshLogFile_Click);
+            this.searchBox.AcceptsReturn = true;
+            this.searchBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.searchBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.searchBox.Location = new System.Drawing.Point(6, 6);
+            this.searchBox.Name = "searchBox";
+            this.searchBox.Size = new System.Drawing.Size(213, 20);
+            this.searchBox.TabIndex = 0;
+            this.searchBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchBox_OnKeyDown);
             // 
             // overview
             // 
@@ -233,10 +233,141 @@
             this.overview.Location = new System.Drawing.Point(4, 22);
             this.overview.Name = "overview";
             this.overview.Padding = new System.Windows.Forms.Padding(3);
-            this.overview.Size = new System.Drawing.Size(867, 329);
+            this.overview.Size = new System.Drawing.Size(966, 329);
             this.overview.TabIndex = 0;
             this.overview.Text = "Übersicht";
             this.overview.UseVisualStyleBackColor = true;
+            // 
+            // pcWindowsData
+            // 
+            this.pcWindowsData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcWindowsData.AutoSize = true;
+            this.pcWindowsData.Location = new System.Drawing.Point(622, 147);
+            this.pcWindowsData.Name = "pcWindowsData";
+            this.pcWindowsData.Size = new System.Drawing.Size(16, 13);
+            this.pcWindowsData.TabIndex = 13;
+            this.pcWindowsData.Text = "...";
+            // 
+            // pcIPData
+            // 
+            this.pcIPData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcIPData.AutoSize = true;
+            this.pcIPData.Location = new System.Drawing.Point(622, 78);
+            this.pcIPData.Name = "pcIPData";
+            this.pcIPData.Size = new System.Drawing.Size(16, 13);
+            this.pcIPData.TabIndex = 12;
+            this.pcIPData.Text = "...";
+            // 
+            // pcOnlineData
+            // 
+            this.pcOnlineData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcOnlineData.AutoSize = true;
+            this.pcOnlineData.Location = new System.Drawing.Point(622, 124);
+            this.pcOnlineData.Name = "pcOnlineData";
+            this.pcOnlineData.Size = new System.Drawing.Size(16, 13);
+            this.pcOnlineData.TabIndex = 11;
+            this.pcOnlineData.Text = "...";
+            // 
+            // pcPingData
+            // 
+            this.pcPingData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcPingData.AutoSize = true;
+            this.pcPingData.Location = new System.Drawing.Point(622, 102);
+            this.pcPingData.Name = "pcPingData";
+            this.pcPingData.Size = new System.Drawing.Size(16, 13);
+            this.pcPingData.TabIndex = 10;
+            this.pcPingData.Text = "-1";
+            // 
+            // pcNameData
+            // 
+            this.pcNameData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcNameData.AutoSize = true;
+            this.pcNameData.Location = new System.Drawing.Point(622, 52);
+            this.pcNameData.Name = "pcNameData";
+            this.pcNameData.Size = new System.Drawing.Size(16, 13);
+            this.pcNameData.TabIndex = 9;
+            this.pcNameData.Text = "...";
+            // 
+            // pcWindows
+            // 
+            this.pcWindows.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcWindows.AutoSize = true;
+            this.pcWindows.Location = new System.Drawing.Point(518, 147);
+            this.pcWindows.Name = "pcWindows";
+            this.pcWindows.Size = new System.Drawing.Size(57, 13);
+            this.pcWindows.TabIndex = 8;
+            this.pcWindows.Text = "Windows: ";
+            // 
+            // pcOnline
+            // 
+            this.pcOnline.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcOnline.AutoSize = true;
+            this.pcOnline.Location = new System.Drawing.Point(518, 124);
+            this.pcOnline.Name = "pcOnline";
+            this.pcOnline.Size = new System.Drawing.Size(59, 13);
+            this.pcOnline.TabIndex = 7;
+            this.pcOnline.Text = "Online seit:";
+            // 
+            // pcIP
+            // 
+            this.pcIP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcIP.AutoSize = true;
+            this.pcIP.Location = new System.Drawing.Point(518, 78);
+            this.pcIP.Name = "pcIP";
+            this.pcIP.Size = new System.Drawing.Size(20, 13);
+            this.pcIP.TabIndex = 6;
+            this.pcIP.Text = "IP:";
+            // 
+            // pcPing
+            // 
+            this.pcPing.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcPing.AutoSize = true;
+            this.pcPing.Location = new System.Drawing.Point(518, 102);
+            this.pcPing.Name = "pcPing";
+            this.pcPing.Size = new System.Drawing.Size(31, 13);
+            this.pcPing.TabIndex = 5;
+            this.pcPing.Text = "Ping:";
+            // 
+            // pcName
+            // 
+            this.pcName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcName.AutoSize = true;
+            this.pcName.Location = new System.Drawing.Point(518, 52);
+            this.pcName.Name = "pcName";
+            this.pcName.Size = new System.Drawing.Size(38, 13);
+            this.pcName.TabIndex = 4;
+            this.pcName.Text = "Name:";
+            // 
+            // pcInfo
+            // 
+            this.pcInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pcInfo.AutoSize = true;
+            this.pcInfo.Location = new System.Drawing.Point(518, 22);
+            this.pcInfo.Name = "pcInfo";
+            this.pcInfo.Size = new System.Drawing.Size(118, 13);
+            this.pcInfo.TabIndex = 3;
+            this.pcInfo.Text = "Computerinformationen:";
+            // 
+            // getData
+            // 
+            this.getData.Location = new System.Drawing.Point(317, 6);
+            this.getData.Name = "getData";
+            this.getData.Size = new System.Drawing.Size(187, 45);
+            this.getData.TabIndex = 2;
+            this.getData.Text = "Download Data";
+            this.getData.UseVisualStyleBackColor = true;
+            this.getData.Click += new System.EventHandler(this.getData_Click);
             // 
             // adressinformation
             // 
@@ -252,6 +383,7 @@
             this.adressinformation.TabIndex = 1;
             this.adressinformation.UseCompatibleStateImageBehavior = false;
             this.adressinformation.View = System.Windows.Forms.View.Details;
+            this.adressinformation.SelectedIndexChanged += new System.EventHandler(this.adressinformation_SelectedIndexChanged);
             // 
             // Computername
             // 
@@ -263,126 +395,6 @@
             this.IP.Text = "IP";
             this.IP.Width = 139;
             // 
-            // getData
-            // 
-            this.getData.Location = new System.Drawing.Point(317, 6);
-            this.getData.Name = "getData";
-            this.getData.Size = new System.Drawing.Size(187, 45);
-            this.getData.TabIndex = 2;
-            this.getData.Text = "Download Data";
-            this.getData.UseVisualStyleBackColor = true;
-            this.getData.Click += new System.EventHandler(this.getData_Click);
-            // 
-            // pcInfo
-            // 
-            this.pcInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcInfo.AutoSize = true;
-            this.pcInfo.Location = new System.Drawing.Point(553, 22);
-            this.pcInfo.Name = "pcInfo";
-            this.pcInfo.Size = new System.Drawing.Size(118, 13);
-            this.pcInfo.TabIndex = 3;
-            this.pcInfo.Text = "Computerinformationen:";
-            // 
-            // pcName
-            // 
-            this.pcName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcName.AutoSize = true;
-            this.pcName.Location = new System.Drawing.Point(553, 52);
-            this.pcName.Name = "pcName";
-            this.pcName.Size = new System.Drawing.Size(38, 13);
-            this.pcName.TabIndex = 4;
-            this.pcName.Text = "Name:";
-            // 
-            // pcPing
-            // 
-            this.pcPing.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcPing.AutoSize = true;
-            this.pcPing.Location = new System.Drawing.Point(553, 102);
-            this.pcPing.Name = "pcPing";
-            this.pcPing.Size = new System.Drawing.Size(31, 13);
-            this.pcPing.TabIndex = 5;
-            this.pcPing.Text = "Ping:";
-            // 
-            // pcIP
-            // 
-            this.pcIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcIP.AutoSize = true;
-            this.pcIP.Location = new System.Drawing.Point(553, 78);
-            this.pcIP.Name = "pcIP";
-            this.pcIP.Size = new System.Drawing.Size(20, 13);
-            this.pcIP.TabIndex = 6;
-            this.pcIP.Text = "IP:";
-            // 
-            // pcOnline
-            // 
-            this.pcOnline.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcOnline.AutoSize = true;
-            this.pcOnline.Location = new System.Drawing.Point(553, 124);
-            this.pcOnline.Name = "pcOnline";
-            this.pcOnline.Size = new System.Drawing.Size(59, 13);
-            this.pcOnline.TabIndex = 7;
-            this.pcOnline.Text = "Online seit:";
-            // 
-            // pcWindows
-            // 
-            this.pcWindows.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcWindows.AutoSize = true;
-            this.pcWindows.Location = new System.Drawing.Point(553, 147);
-            this.pcWindows.Name = "pcWindows";
-            this.pcWindows.Size = new System.Drawing.Size(57, 13);
-            this.pcWindows.TabIndex = 8;
-            this.pcWindows.Text = "Windows: ";
-            // 
-            // pcNameData
-            // 
-            this.pcNameData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcNameData.AutoSize = true;
-            this.pcNameData.Location = new System.Drawing.Point(657, 52);
-            this.pcNameData.Name = "pcNameData";
-            this.pcNameData.Size = new System.Drawing.Size(73, 13);
-            this.pcNameData.TabIndex = 9;
-            this.pcNameData.Text = "TestComputer";
-            // 
-            // pcPingData
-            // 
-            this.pcPingData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcPingData.AutoSize = true;
-            this.pcPingData.Location = new System.Drawing.Point(657, 102);
-            this.pcPingData.Name = "pcPingData";
-            this.pcPingData.Size = new System.Drawing.Size(19, 13);
-            this.pcPingData.TabIndex = 10;
-            this.pcPingData.Text = "ok";
-            // 
-            // pcOnlineData
-            // 
-            this.pcOnlineData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcOnlineData.AutoSize = true;
-            this.pcOnlineData.Location = new System.Drawing.Point(657, 124);
-            this.pcOnlineData.Name = "pcOnlineData";
-            this.pcOnlineData.Size = new System.Drawing.Size(61, 13);
-            this.pcOnlineData.TabIndex = 11;
-            this.pcOnlineData.Text = "09.01.2015";
-            // 
-            // pcIPData
-            // 
-            this.pcIPData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcIPData.AutoSize = true;
-            this.pcIPData.Location = new System.Drawing.Point(657, 78);
-            this.pcIPData.Name = "pcIPData";
-            this.pcIPData.Size = new System.Drawing.Size(64, 13);
-            this.pcIPData.TabIndex = 12;
-            this.pcIPData.Text = "15.220.88.2";
-            // 
-            // pcWindowsData
-            // 
-            this.pcWindowsData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pcWindowsData.AutoSize = true;
-            this.pcWindowsData.Location = new System.Drawing.Point(657, 147);
-            this.pcWindowsData.Name = "pcWindowsData";
-            this.pcWindowsData.Size = new System.Drawing.Size(63, 13);
-            this.pcWindowsData.TabIndex = 13;
-            this.pcWindowsData.Text = "Windows 8 ";
-            // 
             // tabBar_Trojaner
             // 
             this.tabBar_Trojaner.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -393,14 +405,14 @@
             this.tabBar_Trojaner.Location = new System.Drawing.Point(12, 12);
             this.tabBar_Trojaner.Name = "tabBar_Trojaner";
             this.tabBar_Trojaner.SelectedIndex = 0;
-            this.tabBar_Trojaner.Size = new System.Drawing.Size(875, 355);
+            this.tabBar_Trojaner.Size = new System.Drawing.Size(974, 355);
             this.tabBar_Trojaner.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(899, 482);
+            this.ClientSize = new System.Drawing.Size(998, 482);
             this.Controls.Add(this.eventLog);
             this.Controls.Add(this.tabBar_Trojaner);
             this.Name = "Form1";

@@ -11,7 +11,7 @@ namespace idpaServer
 {
     class ConnectionManager
     {
-        private const int port = 8080;
+        private const int port = 12345;
 
         //Returns the Local IP
         public static string GetLocalIp()
@@ -24,7 +24,7 @@ namespace idpaServer
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
                 localIP = ip.ToString();
-                break;
+                //break;
                 }
             }
             return localIP;
@@ -173,9 +173,9 @@ namespace idpaServer
         }
 
         //Check if the Ip has changed since last update on the Web Server
-        public static bool HasClientIpChangend(string uri, int id)
+        public static bool HasClientIpChangend(string uri, int id, string ip)
         {    
-            string parameters = @"id=" + id.ToString();
+            string parameters = @"id=" + id.ToString() + "&ip=" + ip;
             string result;
 
             using (WebClient wc = new WebClient())
@@ -189,9 +189,9 @@ namespace idpaServer
         }
 
         //Save the Data to the Web Sever
-        public static int SaveClientDataToServer(string uri, string name, string winVers)
+        public static int SaveClientDataToServer(string uri, string name, string winVers, string id)
         {
-            string parameters = @"name=" + name + "&winVers=" + winVers;
+            string parameters = @"name=" + name + "&winVers=" + winVers + "&ip=" + id;
             int myId;
 
             using (WebClient wc = new WebClient())
@@ -205,9 +205,9 @@ namespace idpaServer
         }
 
         //Update the Data on the Web Server
-        public static string UpdateEntry(string uri, int id)
+        public static string UpdateEntry(string uri, int id, string ip)
         {
-            string parameters = @"id=" + id;
+            string parameters = @"id=" + id + "&ip=" + ip;
             string output;
 
             using (WebClient wc = new WebClient())
